@@ -12,15 +12,18 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.data.PetResponse
+import lt.getpet.getpet.managers.ManageFavourites
 import lt.getpet.getpet.network.PetApiService
 
 class MainActivity : AppCompatActivity() {
     private var subscription: Disposable? = null
     lateinit var adapter: PetAdapter
+    lateinit var favouritesManager: ManageFavourites
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        favouritesManager = ManageFavourites(context = applicationContext)
         loadPets()
 
         setup()
@@ -66,6 +69,9 @@ class MainActivity : AppCompatActivity() {
             override fun onCardSwiped(direction: SwipeDirection) {
                 Log.d("CardStackView", "onCardSwiped: " + direction.toString())
                 val pet = adapter.getItem(activity_main_card_stack_view.topIndex - 1)
+                if (direction == SwipeDirection.Left) {
+                    favouritesManager.store(pet)
+                }
             }
 
             override fun onCardReversed() {

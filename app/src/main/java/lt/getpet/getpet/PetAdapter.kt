@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import lt.getpet.getpet.data.PetResponse
 
 
-class PetAdapter(context: Context) : ArrayAdapter<Pet>(context, 0) {
+class PetAdapter(context: Context) : ArrayAdapter<PetResponse>(context, 0) {
 
     override fun getView(position: Int, contentView: View?, parent: ViewGroup): View {
         var contentView = contentView
@@ -30,7 +31,7 @@ class PetAdapter(context: Context) : ArrayAdapter<Pet>(context, 0) {
 
         holder.name.setText(spot!!.name)
         holder.short_description.setText(spot!!.short_description)
-        Glide.with(context).load(spot!!.url).into(holder.image)
+        Glide.with(context).load(spot!!.photo).into(holder.image)
 
         return contentView
     }

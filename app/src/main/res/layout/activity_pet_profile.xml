@@ -37,8 +37,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_home"
                     />

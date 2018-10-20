@@ -1,15 +1,11 @@
 package lt.getpet.getpet
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.data.PetResponse
-import lt.getpet.getpet.network.GetPetActivity
 
 class PetProfileActivity : AppCompatActivity() {
 
@@ -21,11 +17,10 @@ class PetProfileActivity : AppCompatActivity() {
         val pet = intent.getParcelableExtra<PetResponse>("pet")
         Log.d("PetProfileActivity",pet.toString())
 
-        fab.setOnClickListener { view ->
-            val i = Intent(this@PetProfileActivity, GetPetActivity::class.java)
-            i.putExtra("pet", pet)
-            startActivity(i)
-        }
+//        fab.setOnClickListener { view ->
+//            val i = Intent(this@PetProfileActivity, GetPetActivity::class.java)
+//            i.putExtra("pet", pet)
+//            startActivity(i)
+//        }
     }
-
 }

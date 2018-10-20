@@ -11,7 +11,7 @@ import lt.getpet.getpet.R
 import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.network.PetApiService
 
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
 
     private var subscription: Disposable? = null
 
@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
 
     fun showPetResponse(petsList: List<PetResponse>) {
         val petMessage = "${petsList[0].id} ${petsList[0].shelter.email}"
-        message.text = petMessage
+//        message.text = petMessage
     }
 
     fun showNoPets() {
-        message.text = "Opps, something wrong happened"
+//        message.text = "Opps, something wrong happened"
     }
 }
 

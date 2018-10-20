@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">GET PET</string>
+    <string name="app_name">Get Pet</string>
     <string name="title_activity_pet_profile">PetProfileActivity</string>
 </resources>

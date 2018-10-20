@@ -51,10 +51,10 @@
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="6"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -63,8 +63,9 @@
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/pet_image"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="200dp"
                 android:layout_margin="16dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/doggie_lui_peng_unsplash"
@@ -86,10 +87,40 @@
                 app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
+                android:id="@+id/pet_short_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Labai grazus suniukas dogis iesko namu"
+                android:textColor="@color/colorText"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:text="Mano istorija"
+                android:textColor="@color/colorText"
+                android:textSize="22sp"
+                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
                 android:id="@+id/pet_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:text="Labai grazus suniukas dogis iesko namu"
@@ -98,15 +129,36 @@
                 app:layout_constraintBottom_toTopOf="@id/pet_short_description"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
-            <Button
+            <TextView
+                android:id="@+id/paslauga"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="16dp"
                 android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:text="Get Pet"
-                android:textColor="@color/colorAccent"
-                android:textStyle="bold" />
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Ar priglausi mane?"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/button_get_pet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_gravity="center|bottom"
+        android:background="@color/colorPrimary"
+        android:text="Get Pet"
+        android:textSize="22dp"
+        android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
+        android:textStyle="bold" />
 </LinearLayout>

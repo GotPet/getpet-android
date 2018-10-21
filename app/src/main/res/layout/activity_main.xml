@@ -1,97 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    >
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorAccent"
-        android:elevation="4dp"
         android:layout_marginBottom="6dp"
-        >
+        android:background="?attr/colorAccent"
+        android:elevation="4dp">
 
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginEnd="12dp"
-            >
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMode="fixed">
 
-            <ImageButton
-                android:id="@+id/activity_profile"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_profile"
-                />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_proflile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_profile" />
 
-            <ImageButton
-                android:id="@+id/activity_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_home"
-                />
-            <requestFocus />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_swipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_home" />
 
-            <ImageButton
-                android:id="@+id/activity_favourites"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="?android:attr/selectableItemBackground"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_favourites"
-                />
+            <android.support.design.widget.TabItem
+                android:id="@+id/tab_favorite_pets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_favourites" />
 
-        </LinearLayout>
+        </android.support.design.widget.TabLayout>
 
     </android.support.v7.widget.Toolbar>
 
-    <com.yuyakaido.android.cardstackview.CardStackView
-        android:id="@+id/activity_main_card_stack_view"
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
-        android:paddingBottom="4dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="8dp"
-        android:clipToPadding="false"
-        app:elevationEnabled="true"
-        app:leftOverlay="@layout/overlay_left"
-        app:rightOverlay="@layout/overlay_right"
-        app:scaleDiff="0.02"
-        app:stackFrom="top"
-        app:swipeDirection="freedom_no_bottom"
-        app:swipeEnabled="true"
-        app:swipeThreshold="0.75"
-        app:topOverlay="@layout/overlay_top"
-        app:translationDiff="12"
-        app:visibleCount="3"
-        />
+        android:layout_height="match_parent" />
 
-    <ProgressBar
-        android:id="@+id/activity_main_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="180dp"
-        android:layout_centerInParent="true"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        />
 
-</RelativeLayout>
+</LinearLayout>

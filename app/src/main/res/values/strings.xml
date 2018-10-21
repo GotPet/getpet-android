@@ -4,4 +4,7 @@
     <string name="ar_priglausi_mane">\"Ar priglausi mane?\"</string>
     <string name="title_activity_pet_favorites">PetFavoritesActivity</string>
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

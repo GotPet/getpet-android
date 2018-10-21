@@ -107,6 +107,11 @@ class PetFavoritesActivityFragment : Fragment() {
 
         override fun getItemCount() = pets.size
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = PetFavoritesActivityFragment()
+    }
 }
 
 

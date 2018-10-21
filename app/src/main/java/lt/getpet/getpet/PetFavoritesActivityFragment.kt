@@ -24,9 +24,6 @@ import lt.getpet.getpet.network.PetApiService
  */
 class PetFavoritesActivityFragment : Fragment() {
 
-    private var subscription: Disposable? = null
-
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var favouritesManager: ManageFavourites
 
@@ -46,21 +43,7 @@ class PetFavoritesActivityFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        subscription = PetApiService.create().getPetResponse()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ it ->
-                    showPetResponse(it)
-                }, {
-                    Log.e("Error", "Error loading pets", it)
-                })
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        subscription?.dispose()
+        showPetResponse((activity as PetsCallback).getPets())
     }
 
     private fun showPetResponse(pets: List<PetResponse>) {

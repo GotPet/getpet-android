@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCardSwiped(direction: SwipeDirection) {
                 Log.d("CardStackView", "onCardSwiped: " + direction.toString())
                 val pet = adapter.getItem(activity_main_card_stack_view.topIndex - 1)
-                if (direction == SwipeDirection.Left) {
+                if (direction == SwipeDirection.Right) {
                     favouritesManager.store(pet)
                 }
             }

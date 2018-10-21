@@ -10,13 +10,13 @@ import lt.getpet.getpet.data.PetResponse
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var pets: List<PetResponse>
+//    private lateinit var pets: List<PetResponse>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        pets = intent.extras.getParcelableArray(EXTRA_PETS).map { v -> v as PetResponse }.toList()
+//        pets = intent.extras.getParcelableArray(EXTRA_PETS).map { v -> v as PetResponse }.toList()
 
 
         replaceFragment(SwipeFragment.newInstance(), TAG_FRAGMENT_SWIPE)

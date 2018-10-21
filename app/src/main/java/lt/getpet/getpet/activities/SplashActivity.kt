@@ -34,7 +34,8 @@ class SplashActivity : AppCompatActivity() {
 
     private fun showPetResponse(pets: List<PetResponse>) {
         val loadMainActivity = Intent(this@SplashActivity, MainActivity::class.java)
-//        intent.putParcelableArrayListExtra(MainActivity.EXTRA_PETS, arrayListOf(*pets))
+        MainActivity.pets = pets
+
         startActivity(loadMainActivity)
         finish()
 

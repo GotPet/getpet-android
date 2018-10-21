@@ -5,20 +5,20 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.managers.ManageFavourites
 
-class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
+class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, PetsCallback {
+    override fun getPets(): List<PetResponse> {
+        return pets
+    }
 
-
-//    private lateinit var pets: List<PetResponse>
 
     private var isLoggedIn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        pets = intent.extras.getParcelableArray(EXTRA_PETS).map { v -> v as PetResponse }.toList()
 
         ManageFavourites(context = applicationContext).clear()
 
@@ -89,7 +89,12 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         const val TAG_USER_LOGIN_FRAGMENT = "TAG_USER_LOGIN_FRAGMENT"
         const val TAG_PROFILE_FRAGMENT = "TAG_PROFILE_FRAGMENT"
 
-        const val EXTRA_PETS = "EXTRA_PETS"
+        var pets: List<PetResponse> = arrayListOf()
     }
 
+}
+
+
+interface PetsCallback {
+    fun getPets(): List<PetResponse>
 }

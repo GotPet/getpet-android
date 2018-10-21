@@ -1,7 +1,6 @@
 package lt.getpet.getpet
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -10,34 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.SwipeDirection
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_swipe.*
 import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.managers.ManageFavourites
-import lt.getpet.getpet.network.PetApiService
 
 class SwipeFragment : Fragment() {
     private var subscription: Disposable? = null
     lateinit var adapter: PetAdapter
     lateinit var favouritesManager: ManageFavourites
 
-    fun loadPets() {
-        subscription = PetApiService.create().getPetResponse()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ it ->
-                    showPetResponse(it)
-                }, {
-                    Log.e("Error", "Error loading pets", it)
-                    showNoPets()
-                })
+    private fun loadPets() {
+        showPetResponse((activity as PetsCallback).getPets())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
 
         favouritesManager = ManageFavourites(context = activity!!.applicationContext)
 

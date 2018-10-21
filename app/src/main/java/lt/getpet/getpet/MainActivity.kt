@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        activity_favourites.setOnClickListener { _ ->
+            startActivity(Intent(this, PetFavoritesActivity::class.java))
+        }
+
         favouritesManager = ManageFavourites(context = applicationContext)
 
         loadPets()
@@ -70,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCardSwiped(direction: SwipeDirection) {
                 Log.d("CardStackView", "onCardSwiped: " + direction.toString())
                 val pet = adapter.getItem(activity_main_card_stack_view.topIndex - 1)
-                if (direction == SwipeDirection.Left) {
+                if (direction == SwipeDirection.Right) {
                     favouritesManager.store(pet)
                 }
             }

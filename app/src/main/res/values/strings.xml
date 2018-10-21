@@ -2,4 +2,6 @@
     <string name="app_name">Get Pet</string>
     <string name="title_activity_pet_profile">PetProfileActivity</string>
     <string name="ar_priglausi_mane">\"Ar priglausi mane?\"</string>
+    <string name="title_activity_pet_favorites">PetFavoritesActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

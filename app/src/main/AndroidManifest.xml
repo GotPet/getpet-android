@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="lt.getpet.getpet"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="lt.getpet.getpet">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        >
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -22,19 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".PetProfileActivity"
             android:label="@string/title_activity_pet_profile"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".network.GetPetActivity" />
+        <activity
+            android:name=".PetFavoritesActivity"
+            android:label="@string/title_activity_pet_favorites"
+            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="preloaded_fonts"

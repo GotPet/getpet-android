@@ -47,7 +47,6 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_home"
                 />
-            <requestFocus />
 
             <ImageButton
                 android:id="@+id/activity_favourites"

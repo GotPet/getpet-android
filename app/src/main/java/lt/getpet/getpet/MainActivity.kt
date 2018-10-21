@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import lt.getpet.getpet.data.PetResponse
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
+
 
 //    private lateinit var pets: List<PetResponse>
+
+    private var isLoggedIn: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +42,17 @@ class MainActivity : AppCompatActivity() {
     fun setTab(position: Int) {
         when (position) {
             0 -> {
-                val fragment = supportFragmentManager.findFragmentByTag(TAG_USER_FRAGMENT)
-                        ?: UserLoginFragment.newInstance()
+                if (!isLoggedIn) {
+                    val fragment = supportFragmentManager.findFragmentByTag(TAG_USER_LOGIN_FRAGMENT)
+                            ?: UserLoginFragment.newInstance()
 
-                replaceFragment(fragment, TAG_USER_FRAGMENT)
+                    replaceFragment(fragment, TAG_USER_LOGIN_FRAGMENT)
+                } else {
+                    val fragment = supportFragmentManager.findFragmentByTag(TAG_PROFILE_FRAGMENT)
+                            ?: ProfileFragment.newInstance()
+
+                    replaceFragment(fragment, TAG_PROFILE_FRAGMENT)
+                }
             }
             1 -> {
                 val fragment = supportFragmentManager.findFragmentByTag(TAG_FRAGMENT_SWIPE)
@@ -68,10 +76,16 @@ class MainActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    override fun onUserLoggedIn() {
+        isLoggedIn = true
+        setTab(0)
+    }
+
     companion object {
         const val TAG_FRAGMENT_SWIPE = "TAG_FRAGMENT_SWIPE"
         const val TAG_FRAGMENT_FAVORITE_PETS = "TAG_FRAGMENT_FAVORITE_PETS"
-        const val TAG_USER_FRAGMENT = "TAG_USER_FRAGMENT"
+        const val TAG_USER_LOGIN_FRAGMENT = "TAG_USER_LOGIN_FRAGMENT"
+        const val TAG_PROFILE_FRAGMENT = "TAG_PROFILE_FRAGMENT"
 
         const val EXTRA_PETS = "EXTRA_PETS"
     }

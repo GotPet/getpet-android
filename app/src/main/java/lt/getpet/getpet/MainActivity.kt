@@ -26,6 +26,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
+                    0 -> {
+                        val fragment = supportFragmentManager.findFragmentByTag(TAG_USER_FRAGMENT)
+                                ?: UserLoginFragment.newInstance()
+
+                        replaceFragment(fragment, TAG_USER_FRAGMENT)
+                    }
                     1 -> {
                         val fragment = supportFragmentManager.findFragmentByTag(TAG_FRAGMENT_SWIPE)
                                 ?: SwipeFragment.newInstance()
@@ -55,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG_FRAGMENT_SWIPE = "TAG_FRAGMENT_SWIPE"
         const val TAG_FRAGMENT_FAVORITE_PETS = "TAG_FRAGMENT_FAVORITE_PETS"
+        const val TAG_USER_FRAGMENT = "TAG_USER_FRAGMENT"
     }
 
 }

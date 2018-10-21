@@ -17,9 +17,9 @@ class PetProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pet_profile)
         setSupportActionBar(toolbar)
 
-        activity_profile.setOnClickListener({
-            startActivity(Intent(this, UserLoginActivity::class.java))
-        })
+//        activity_profile.setOnClickListener({
+//            startActivity(Intent(this, UserLoginActivity::class.java))
+//        })
 
         activity_home.setOnClickListener({
             startActivity(Intent(this, MainActivity::class.java))

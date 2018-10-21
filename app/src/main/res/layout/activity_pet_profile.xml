@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
@@ -113,8 +114,10 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:text="Mano istorija"
-                android:textColor="@color/colorText"
-                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorTextLighter"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/pet_short_description"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -133,23 +136,23 @@
                 app:layout_constraintBottom_toTopOf="@id/pet_short_description"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
-            <TextView
-                android:id="@+id/paslauga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Ar priglausi mane?"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-                app:layout_constraintLeft_toLeftOf="parent" />
-
-
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/ar_priglausi_mane"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/pet_short_description"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:fontFamily="@font/roboto" />
 
     <Button
         android:id="@+id/button_get_pet"
@@ -158,6 +161,7 @@
         android:layout_margin="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_gravity="center|bottom"
         android:background="@color/colorPrimary"
         android:text="Get Pet"

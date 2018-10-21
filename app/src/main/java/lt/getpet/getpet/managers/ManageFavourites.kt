@@ -23,6 +23,12 @@ class ManageFavourites(context: Context) {
         return sharedPreferences.getStringSet(FAVOURITE_PET_PREF_KEY, emptySet()).asSequence().map { id -> id.toInt() }.toList()
     }
 
+    fun clear() {
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+
     companion object {
         const val FAVOURITE_PET_PREF_KEY = "favouritePetsSet"
     }

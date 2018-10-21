@@ -1,10 +1,9 @@
 package lt.getpet.getpet.network
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_get_pet.*
-import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.PetResponse
 

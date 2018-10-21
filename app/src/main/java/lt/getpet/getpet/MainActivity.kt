@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import lt.getpet.getpet.managers.ManageFavourites
 
 class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 
 //        pets = intent.extras.getParcelableArray(EXTRA_PETS).map { v -> v as PetResponse }.toList()
 
+        ManageFavourites(context = applicationContext).clear()
 
         replaceFragment(SwipeFragment.newInstance(), TAG_FRAGMENT_SWIPE)
 

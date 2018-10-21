@@ -46,10 +46,12 @@ class SwipeFragment : Fragment() {
         setup()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDetach() {
+        super.onDetach()
         subscription?.dispose()
+
     }
+
 
     fun showPetResponse(petsList: List<PetResponse>) {
         adapter = PetAdapter(activity!!.applicationContext)

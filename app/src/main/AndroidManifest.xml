@@ -15,6 +15,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activities.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,17 +24,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PetProfileActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_pet_profile"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:screenOrientation="portrait"
+
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".network.GetPetActivity" />
-        <activity
-            android:name=".PetFavoritesActivity"
-            android:label="@string/title_activity_pet_favorites"
-            android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="preloaded_fonts"

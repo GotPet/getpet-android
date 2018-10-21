@@ -26,7 +26,6 @@ class PetProfileActivity : AppCompatActivity() {
         })
 
         val pet = intent.getParcelableExtra<PetResponse>("pet")
-        Log.d("PetProfileActivity",pet.toString())
         Glide.with(this).load(pet.photo).into(pet_image)
         pet_name.text = pet.name
         pet_description.text = pet.description

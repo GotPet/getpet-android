@@ -1,5 +1,6 @@
 package lt.getpet.getpet
 
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -67,9 +68,6 @@ class PetFavoritesActivityFragment : Fragment() {
 
         val filteredPets = pets.filter { pet -> petIds.any { id -> id == pet.id } }
 
-        Log.d("petIds", petIds.toString())
-        Log.d("FilteredPets", filteredPets.toString())
-
         recyclerView.adapter = PetsAdapter(filteredPets)
         recyclerView.adapter.notifyDataSetChanged()
     }
@@ -85,7 +83,9 @@ class PetFavoritesActivityFragment : Fragment() {
                 view.pet_short_description.text = pet.short_description
 
                 view.setOnClickListener {
-                    Log.d("Pet clicked", pet.toString())
+                    val intent = Intent(view.context, PetProfileActivity::class.java)
+                    intent.putExtra("pet", pet)
+                    view.context.startActivity(intent)
                 }
             }
 

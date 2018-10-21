@@ -73,7 +73,13 @@ class SwipeFragment : Fragment() {
 
             override fun onCardSwiped(direction: SwipeDirection) {
                 Log.d("CardStackView", "onCardSwiped: " + direction.toString())
-                val pet = adapter.getItem(activity_main_card_stack_view.topIndex - 1)
+                val pos = activity_main_card_stack_view.topIndex - 1
+
+                if (pos < 0 || pos >= adapter.count) {
+                    return
+                }
+
+                val pet = adapter.getItem(pos)
                 if (direction == SwipeDirection.Right) {
                     favouritesManager.store(pet)
                 }

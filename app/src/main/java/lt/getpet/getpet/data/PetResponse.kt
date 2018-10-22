@@ -5,18 +5,18 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PetResponse(
-        val id: Int,
+        val id: Long,
         val name: String,
         val photo: String,
-        val shelter: Shelter,
+        val shelter_id: Long,
         val short_description: String,
         val description: String
-): Parcelable
+) : Parcelable
 
 @Parcelize
-data class Shelter(
-        val id: Int,
+data class ShelterResponse(
+        val id: Long,
         val name: String,
         val email: String,
         val phone: String
-):Parcelable
+) : Parcelable

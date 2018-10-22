@@ -9,8 +9,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import lt.getpet.getpet.MainActivity
 import lt.getpet.getpet.R
-import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.network.PetApiService
+import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.persistence.PetsDatabase
 
 
 class SplashActivity : AppCompatActivity() {
@@ -22,8 +23,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        subscription = PetApiService.create().getPetResponse()
+        val petsDatabase = PetsDatabase.getInstance(this)
+        val petApiService = PetApiService.create()
+        subscription = petApiService.getPets()
                 .subscribeOn(Schedulers.io())
+                .map { pets ->
+                    petsDatabase.petsDao().insertPets(pets)
+                    pets
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     showPetResponse(it)
@@ -32,9 +39,8 @@ class SplashActivity : AppCompatActivity() {
                 })
     }
 
-    private fun showPetResponse(pets: List<PetResponse>) {
+    private fun showPetResponse(pets: List<Pet>) {
         val loadMainActivity = Intent(this@SplashActivity, MainActivity::class.java)
-        MainActivity.pets = pets
 
         startActivity(loadMainActivity)
         finish()

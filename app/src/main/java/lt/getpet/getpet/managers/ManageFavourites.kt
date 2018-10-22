@@ -2,15 +2,13 @@ package lt.getpet.getpet.managers
 
 import android.content.Context
 import android.preference.PreferenceManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import lt.getpet.getpet.data.PetResponse
+import lt.getpet.getpet.data.Pet
 
 class ManageFavourites(context: Context) {
 
     private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)!!
 
-    fun store(pet: PetResponse) {
+    fun store(pet: Pet) {
         val petIds = sharedPreferences.getStringSet(FAVOURITE_PET_PREF_KEY, emptySet()).toMutableSet()
         petIds.add(pet.id.toString())
 

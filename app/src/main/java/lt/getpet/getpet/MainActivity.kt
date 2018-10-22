@@ -1,21 +1,18 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.managers.ManageFavourites
 import com.google.android.material.tabs.TabLayout.*
+import io.reactivex.disposables.Disposable
+import lt.getpet.getpet.data.Pet
 
-class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, PetsCallback {
-    override fun getPets(): List<PetResponse> {
-        return pets
-    }
-
+class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 
     private var isLoggedIn: Boolean = false
+    private var subscription: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, P
             }
 
             override fun onTabUnselected(tab: Tab) {
-
+                supportFragmentManager.findFragmentByTag(TAG_FRAGMENT_SWIPE)
 
             }
 
@@ -40,6 +37,11 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, P
             }
 
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        subscription?.dispose()
     }
 
     fun setTab(position: Int) {
@@ -76,6 +78,7 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, P
         val fm = supportFragmentManager
         val ft = fm.beginTransaction()
         ft.replace(R.id.frame_container, fragment, tag)
+        ft.addToBackStack(null)
         ft.commit()
     }
 
@@ -89,13 +92,6 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, P
         const val TAG_FRAGMENT_FAVORITE_PETS = "TAG_FRAGMENT_FAVORITE_PETS"
         const val TAG_USER_LOGIN_FRAGMENT = "TAG_USER_LOGIN_FRAGMENT"
         const val TAG_PROFILE_FRAGMENT = "TAG_PROFILE_FRAGMENT"
-
-        var pets: List<PetResponse> = arrayListOf()
     }
 
-}
-
-
-interface PetsCallback {
-    fun getPets(): List<PetResponse>
 }

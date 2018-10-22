@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.R
-import lt.getpet.getpet.data.PetResponse
+import lt.getpet.getpet.data.Pet
 
 class GetPetActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class GetPetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_get_pet)
 
 
-        val pet = intent.getParcelableExtra<PetResponse>("pet")
+        val pet = intent.getParcelableExtra<Pet>("pet")
 
         Glide.with(this).load(pet.photo).into(get_pet_image)
         get_pet_name.text = pet.name

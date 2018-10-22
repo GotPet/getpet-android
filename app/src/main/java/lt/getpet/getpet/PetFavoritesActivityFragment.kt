@@ -1,9 +1,9 @@
 package lt.getpet.getpet
 
 import android.content.Intent
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +22,9 @@ import lt.getpet.getpet.network.PetApiService
 /**
  * A placeholder fragment containing a simple view.
  */
-class PetFavoritesActivityFragment : Fragment() {
+class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
     private lateinit var favouritesManager: ManageFavourites
 
 
@@ -51,8 +51,9 @@ class PetFavoritesActivityFragment : Fragment() {
 
         val filteredPets = pets.filter { pet -> petIds.any { id -> id == pet.id } }
 
-        recyclerView.adapter = PetsAdapter(filteredPets)
-        recyclerView.adapter.notifyDataSetChanged()
+        val adapter = PetsAdapter(filteredPets)
+        recyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     class PetsAdapter(private val pets: List<PetResponse>) :

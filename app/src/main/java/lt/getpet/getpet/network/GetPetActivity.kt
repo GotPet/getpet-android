@@ -1,7 +1,7 @@
 package lt.getpet.getpet.network
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.R

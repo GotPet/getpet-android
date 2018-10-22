@@ -1,12 +1,13 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.managers.ManageFavourites
+import com.google.android.material.tabs.TabLayout.*
 
 class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, PetsCallback {
     override fun getPets(): List<PetResponse> {
@@ -24,17 +25,17 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback, P
 
         replaceFragment(SwipeFragment.newInstance(), TAG_FRAGMENT_SWIPE)
 
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab) {
+        tabs.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabReselected(tab: Tab) {
                 setTab(tab.position)
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            override fun onTabUnselected(tab: Tab) {
 
 
             }
 
-            override fun onTabSelected(tab: TabLayout.Tab) {
+            override fun onTabSelected(tab: Tab) {
                 setTab(tab.position)
             }
 

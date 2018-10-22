@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -36,7 +36,7 @@
             android:screenOrientation="portrait"
 
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".network.GetPetActivity" />
+        <activity android:name=".GetPetActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

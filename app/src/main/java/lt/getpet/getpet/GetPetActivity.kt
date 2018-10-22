@@ -1,4 +1,4 @@
-package lt.getpet.getpet.network
+package lt.getpet.getpet
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

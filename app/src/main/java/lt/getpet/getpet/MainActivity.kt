@@ -7,7 +7,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.managers.ManageFavourites
 import com.google.android.material.tabs.TabLayout.*
 import io.reactivex.disposables.Disposable
-import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.fragments.PetFavoritesActivityFragment
+import lt.getpet.getpet.fragments.ProfileFragment
+import lt.getpet.getpet.fragments.SwipeFragment
+import lt.getpet.getpet.fragments.UserLoginFragment
 
 class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 

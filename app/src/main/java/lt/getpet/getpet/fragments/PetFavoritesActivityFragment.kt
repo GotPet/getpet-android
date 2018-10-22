@@ -1,4 +1,4 @@
-package lt.getpet.getpet
+package lt.getpet.getpet.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_pet_favorites.*
 import kotlinx.android.synthetic.main.pet_favorite_cell.view.*
+import lt.getpet.getpet.PetProfileActivity
+import lt.getpet.getpet.R
 import lt.getpet.getpet.managers.ManageFavourites
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.persistence.PetsDatabase
@@ -90,7 +92,7 @@ class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup,
-                                        viewType: Int): PetsAdapter.MyViewHolder {
+                                        viewType: Int): MyViewHolder {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.pet_favorite_cell, parent, false)
 

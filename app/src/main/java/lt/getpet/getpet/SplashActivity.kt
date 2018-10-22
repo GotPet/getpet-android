@@ -1,4 +1,4 @@
-package lt.getpet.getpet.activities
+package lt.getpet.getpet
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,6 @@ import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import lt.getpet.getpet.MainActivity
-import lt.getpet.getpet.R
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.persistence.PetsDatabase

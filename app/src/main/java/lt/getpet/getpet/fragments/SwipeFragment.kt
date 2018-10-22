@@ -1,4 +1,4 @@
-package lt.getpet.getpet
+package lt.getpet.getpet.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_swipe.*
+import lt.getpet.getpet.adapters.PetAdapter
+import lt.getpet.getpet.PetProfileActivity
+import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.managers.ManageFavourites
 import lt.getpet.getpet.persistence.PetsDatabase
@@ -59,17 +62,17 @@ class SwipeFragment : Fragment() {
 
     private fun changeState(state: State) {
         when (state) {
-            SwipeFragment.State.LOADING -> {
+            State.LOADING -> {
                 no_content.visibility = View.GONE
                 activity_main_card_stack_view.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.VISIBLE
             }
-            SwipeFragment.State.NO_CONTENT -> {
+            State.NO_CONTENT -> {
                 no_content.visibility = View.VISIBLE
                 activity_main_card_stack_view.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.GONE
             }
-            SwipeFragment.State.CONTENT -> {
+            State.CONTENT -> {
                 no_content.visibility = View.GONE
                 activity_main_card_stack_view.visibility = View.VISIBLE
                 activity_main_progress_bar.visibility = View.GONE

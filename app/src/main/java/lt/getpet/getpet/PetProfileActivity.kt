@@ -3,13 +3,10 @@ package lt.getpet.getpet
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
 import com.bumptech.glide.Glide
 
 import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.data.PetResponse
-import lt.getpet.getpet.network.GetPetActivity
 
 class PetProfileActivity : AppCompatActivity() {
 

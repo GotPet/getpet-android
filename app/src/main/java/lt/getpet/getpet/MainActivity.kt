@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main.*
-import lt.getpet.getpet.managers.ManageFavourites
 import io.reactivex.disposables.Disposable
 import lt.getpet.getpet.fragments.FavoritePetsFragment
 import lt.getpet.getpet.fragments.UserProfileFragment

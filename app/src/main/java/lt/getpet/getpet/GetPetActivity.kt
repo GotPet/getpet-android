@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_get_pet.*
-import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Pet
 
 class GetPetActivity : AppCompatActivity() {

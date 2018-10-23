@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import lt.getpet.getpet.R
 
-class ProfileFragment : Fragment() {
+class UserProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.person_account, container, false)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = ProfileFragment()
+        fun newInstance() = UserProfileFragment()
     }
 
 

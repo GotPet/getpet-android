@@ -2,7 +2,6 @@ package lt.getpet.getpet.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,28 +9,33 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.SwipeDirection
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_swipe.*
-import lt.getpet.getpet.adapters.PetAdapter
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
+import lt.getpet.getpet.adapters.PetAdapter
 import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.managers.ManageFavourites
+import lt.getpet.getpet.data.PetChoice
+import lt.getpet.getpet.persistence.PetDao
 import lt.getpet.getpet.persistence.PetsDatabase
+import timber.log.Timber
 
-class SwipeFragment : Fragment() {
-    private var subscription: Disposable? = null
+class PetSwipeFragment : Fragment() {
+    private var subscriptions: CompositeDisposable = CompositeDisposable()
     lateinit var adapter: PetAdapter
-    lateinit var favouritesManager: ManageFavourites
+    private lateinit var petsDao: PetDao
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        favouritesManager = ManageFavourites(context = activity!!.applicationContext)
+        petsDao = PetsDatabase.getInstance(context!!).petsDao()
+
         setup()
-        subscription = PetsDatabase.getInstance(context!!).petsDao().getRemainingPets()
+
+        val disposable = petsDao.getRemainingPets()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
@@ -39,12 +43,12 @@ class SwipeFragment : Fragment() {
                 }, {
                     Toast.makeText(context, "Error loading pets", Toast.LENGTH_SHORT).show()
                 })
-
+        subscriptions.add(disposable)
     }
 
     override fun onDetach() {
         super.onDetach()
-        subscription?.dispose()
+        subscriptions.clear()
     }
 
 
@@ -84,17 +88,32 @@ class SwipeFragment : Fragment() {
         changeState(State.NO_CONTENT)
     }
 
+    fun savePetChoice(pet: Pet, isFavorite: Boolean) {
+        val petChoice = PetChoice(petId = pet.id, isFavorite = isFavorite)
+
+        val disposable = Single.fromCallable {
+            petsDao.insertPetChoice(petChoice)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("Saved pet choice: $petChoice")
+                }, {
+                    Timber.w(it)
+                    Toast.makeText(context, "Error saving pet", Toast.LENGTH_SHORT).show()
+                })
+        subscriptions.add(disposable)
+    }
+
 
     private fun setup() {
         changeState(State.LOADING)
 
         activity_main_card_stack_view.setCardEventListener(object : CardStackView.CardEventListener {
             override fun onCardDragging(percentX: Float, percentY: Float) {
-                Log.d("CardStackView", "onCardDragging")
             }
 
             override fun onCardSwiped(direction: SwipeDirection) {
-                Log.d("CardStackView", "onCardSwiped: " + direction.toString())
                 val pos = activity_main_card_stack_view.topIndex - 1
 
                 if (pos == adapter.count - 1) {
@@ -103,33 +122,29 @@ class SwipeFragment : Fragment() {
 
                 val pet = adapter.getItem(pos)
                 if (direction == SwipeDirection.Right && pet != null) {
-                    favouritesManager.store(pet)
+                    savePetChoice(pet, true)
+                } else if (direction == SwipeDirection.Left && pet != null) {
+                    savePetChoice(pet, false)
                 }
             }
 
             override fun onCardReversed() {
-                Log.d("CardStackView", "onCardReversed")
             }
 
             override fun onCardMovedToOrigin() {
-                Log.d("CardStackView", "onCardMovedToOrigin")
             }
 
             override fun onCardClicked(index: Int) {
                 val pet = adapter.getItem(index)
-                Log.d("CardStackView", "onCardClicked: $index")
-
                 val intent = Intent(context, PetProfileActivity::class.java)
                 intent.putExtra("pet", pet)
                 startActivity(intent)
-
             }
         })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_swipe, container, false)
     }
 
@@ -140,6 +155,6 @@ class SwipeFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = SwipeFragment()
+        fun newInstance() = PetSwipeFragment()
     }
 }

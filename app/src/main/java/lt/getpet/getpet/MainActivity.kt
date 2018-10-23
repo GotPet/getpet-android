@@ -7,9 +7,9 @@ import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.managers.ManageFavourites
 import io.reactivex.disposables.Disposable
-import lt.getpet.getpet.fragments.PetFavoritesActivityFragment
-import lt.getpet.getpet.fragments.ProfileFragment
-import lt.getpet.getpet.fragments.SwipeFragment
+import lt.getpet.getpet.fragments.FavoritePetsFragment
+import lt.getpet.getpet.fragments.UserProfileFragment
+import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserLoginFragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        ManageFavourites(context = applicationContext).clear()
 
         view_pager.adapter = TabsPagerAdapter(supportFragmentManager)
 
@@ -51,13 +49,13 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
             return when (position) {
                 0 -> {
                     if (isLoggedIn) {
-                        ProfileFragment.newInstance()
+                        UserProfileFragment.newInstance()
                     } else {
                         UserLoginFragment.newInstance()
                     }
                 }
-                1 -> SwipeFragment.newInstance()
-                2 -> PetFavoritesActivityFragment.newInstance()
+                1 -> PetSwipeFragment.newInstance()
+                2 -> FavoritePetsFragment.newInstance()
                 else -> throw IllegalArgumentException("Tab for position $position doesn't exist")
 
             }
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         }
 
         override fun getItemPosition(item: Any): Int {
-            if (item is ProfileFragment && !isLoggedIn) {
+            if (item is UserProfileFragment && !isLoggedIn) {
                 return PagerAdapter.POSITION_NONE
             }
 

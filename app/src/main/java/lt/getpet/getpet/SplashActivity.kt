@@ -9,29 +9,28 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetsDatabase
+import timber.log.Timber
 
 
 class SplashActivity : AppCompatActivity() {
 
     private var subscription: Disposable? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val petsDatabase = PetsDatabase.getInstance(this)
-        val petApiService = PetApiService.create()
-        subscription = petApiService.getPets()
+        subscription = PetApiService.create().getPets()
                 .subscribeOn(Schedulers.io())
                 .map { pets ->
-                    petsDatabase.petsDao().insertPets(pets)
+                    PetsDatabase.getInstance(this).petsDao().insertPets(pets)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     showMainActivity()
-                }, {
-                    Toast.makeText(this, "Error loading pets", Toast.LENGTH_SHORT).show()
+                }, { t ->
+                    Timber.w(t)
+                    Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
                 })
     }
 

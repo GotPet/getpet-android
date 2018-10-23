@@ -2,7 +2,6 @@ package lt.getpet.getpet.network
 
 import io.reactivex.Single
 import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.data.Shelter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,10 +13,6 @@ interface PetApiService {
 
     @GET("api/v1/pets")
     fun getPets(): Single<List<Pet>>
-
-    @GET("api/v1/shelters")
-    fun getShelters(): Single<List<Shelter>>
-
 
     companion object {
         fun create(): PetApiService {

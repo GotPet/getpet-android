@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6a4c2f03fcb10caa0580c6705f7aa8e9",
+    "identityHash": "484432e535b268507bc5e9282a78fa85",
     "entities": [
       {
         "tableName": "Pets",
@@ -71,11 +71,78 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "PetChoices",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pet_id` INTEGER NOT NULL, `is_favorite` INTEGER NOT NULL, `created_at` INTEGER NOT NULL, FOREIGN KEY(`pet_id`) REFERENCES `Pets`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "petId",
+            "columnName": "pet_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFavorite",
+            "columnName": "is_favorite",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_PetChoices_pet_id",
+            "unique": true,
+            "columnNames": [
+              "pet_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_PetChoices_pet_id` ON `${TABLE_NAME}` (`pet_id`)"
+          },
+          {
+            "name": "index_PetChoices_is_favorite",
+            "unique": false,
+            "columnNames": [
+              "is_favorite"
+            ],
+            "createSql": "CREATE  INDEX `index_PetChoices_is_favorite` ON `${TABLE_NAME}` (`is_favorite`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Pets",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pet_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6a4c2f03fcb10caa0580c6705f7aa8e9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"484432e535b268507bc5e9282a78fa85\")"
     ]
   }
 }

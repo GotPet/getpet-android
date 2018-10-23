@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.data.PetChoice
 
-@Database(entities = [Pet::class], version = 1)
+@Database(entities = [Pet::class, PetChoice::class], version = 1)
 abstract class PetsDatabase : RoomDatabase() {
 
     abstract fun petsDao(): PetDao
@@ -25,6 +26,7 @@ abstract class PetsDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         PetsDatabase::class.java, "Pets.db")
+                        .fallbackToDestructiveMigration()
                         .build()
     }
 }

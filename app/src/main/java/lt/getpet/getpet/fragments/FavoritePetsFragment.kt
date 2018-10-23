@@ -15,20 +15,19 @@ import kotlinx.android.synthetic.main.fragment_pet_favorites.*
 import kotlinx.android.synthetic.main.pet_favorite_cell.view.*
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
-import lt.getpet.getpet.managers.ManageFavourites
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.persistence.PetsDatabase
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
+class FavoritePetsFragment : androidx.fragment.app.Fragment() {
 
     private var subscription: Disposable? = null
 
 
-    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
-    private lateinit var favouritesManager: ManageFavourites
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var petsAdapter: PetsAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,17 +35,20 @@ class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
         return inflater.inflate(R.layout.fragment_pet_favorites, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        petsAdapter = PetsAdapter(emptyList())
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        favouritesManager = ManageFavourites(context = activity!!.applicationContext)
-
-
         recyclerView = pets_recycler_view.apply {
             setHasFixedSize(true)
+            adapter = petsAdapter
         }
 
-        subscription = PetsDatabase.getInstance(context!!).petsDao().getRemainingPets()
+        subscription = PetsDatabase.getInstance(context!!).petsDao().getFavoritePets()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
@@ -62,17 +64,16 @@ class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showPets(pets: List<Pet>) {
-        val petIds = favouritesManager.getPetsFromPrefs()
-
-        val filteredPets = pets.filter { pet -> petIds.any { id -> id.toLong() == pet.id } }
-
-        val adapter = PetsAdapter(filteredPets)
-        recyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
+        petsAdapter.pets = pets
+        petsAdapter.notifyDataSetChanged()
     }
 
-    class PetsAdapter(private val pets: List<Pet>) :
+    class PetsAdapter(var pets: List<Pet>) :
             RecyclerView.Adapter<PetsAdapter.MyViewHolder>() {
+
+        override fun getItemId(position: Int): Long {
+            return pets[position].id
+        }
 
         class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             fun bindPet(pet: Pet) {
@@ -109,7 +110,7 @@ class PetFavoritesActivityFragment : androidx.fragment.app.Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = PetFavoritesActivityFragment()
+        fun newInstance() = FavoritePetsFragment()
     }
 }
 

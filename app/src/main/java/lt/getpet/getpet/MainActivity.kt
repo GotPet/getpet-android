@@ -11,7 +11,8 @@ import lt.getpet.getpet.fragments.PetFavoritesActivityFragment
 import lt.getpet.getpet.fragments.ProfileFragment
 import lt.getpet.getpet.fragments.SwipeFragment
 import lt.getpet.getpet.fragments.UserLoginFragment
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 
@@ -43,7 +44,8 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         view_pager.adapter!!.notifyDataSetChanged()
     }
 
-    inner class TabsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    inner class TabsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
@@ -63,6 +65,18 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 
         override fun getCount(): Int {
             return 3
+        }
+
+        override fun getItemPosition(item: Any): Int {
+            if (item is ProfileFragment && !isLoggedIn) {
+                return PagerAdapter.POSITION_NONE
+            }
+
+            if (item is UserLoginFragment && isLoggedIn) {
+                return PagerAdapter.POSITION_NONE
+            }
+
+            return super.getItemPosition(item)
         }
 
     }

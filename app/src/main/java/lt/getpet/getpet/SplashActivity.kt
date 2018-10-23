@@ -8,7 +8,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import lt.getpet.getpet.network.PetApiService
-import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.persistence.PetsDatabase
 
 
@@ -27,17 +26,16 @@ class SplashActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .map { pets ->
                     petsDatabase.petsDao().insertPets(pets)
-                    pets
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ it ->
-                    showPetResponse(it)
+                .subscribe({
+                    showMainActivity()
                 }, {
                     Toast.makeText(this, "Error loading pets", Toast.LENGTH_SHORT).show()
                 })
     }
 
-    private fun showPetResponse(pets: List<Pet>) {
+    private fun showMainActivity() {
         val loadMainActivity = Intent(this@SplashActivity, MainActivity::class.java)
 
         startActivity(loadMainActivity)

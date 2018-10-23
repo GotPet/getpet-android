@@ -1,6 +1,7 @@
 package lt.getpet.getpet.network
 
 import io.reactivex.Single
+import lt.getpet.getpet.BuildConfig
 import lt.getpet.getpet.data.Pet
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,16 +17,20 @@ interface PetApiService {
 
     companion object {
         fun create(): PetApiService {
+            val clientBuilder = OkHttpClient.Builder()
 
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+            if (BuildConfig.DEBUG) {
+                val interceptor = HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BASIC
+                }
+                clientBuilder.addInterceptor(interceptor)
+            }
 
             val retrofit = Retrofit.Builder()
                     .addConverterFactory(MoshiConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .baseUrl("https://www.getpet.lt/")
-                    .client(client)
+                    .client(clientBuilder.build())
                     .build()
 
             return retrofit.create(PetApiService::class.java)

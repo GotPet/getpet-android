@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:keepScreenOn="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -12,9 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="6dp"
-        android:background="?attr/colorAccent"
-        android:elevation="4dp">
+        android:background="?attr/colorAccent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -24,31 +22,26 @@
             app:tabMode="fixed">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_proflile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_profile" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_swipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_home" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_favorite_pets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:icon="@drawable/ic_favourites" />
-
         </com.google.android.material.tabs.TabLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/frame_container"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>

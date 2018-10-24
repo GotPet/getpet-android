@@ -1,6 +1,7 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -13,18 +14,21 @@ import lt.getpet.getpet.fragments.UserLoginFragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
+import lt.getpet.getpet.data.UserAccount
 
 
 class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
 
-    private var isLoggedIn: Boolean = false
+
+    private var userAccount: UserAccount? = null
     private var subscription: Disposable? = null
+    private val tabsPagerAdapter: TabsPagerAdapter by lazy { TabsPagerAdapter(supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        view_pager.adapter = TabsPagerAdapter(supportFragmentManager)
+        view_pager.adapter = tabsPagerAdapter
 
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(view_pager))
         view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
@@ -36,9 +40,13 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         subscription?.dispose()
     }
 
-    override fun onUserLoggedIn() {
-        isLoggedIn = true
-        view_pager.adapter!!.notifyDataSetChanged()
+    override fun onUserLoggedIn(userAccount: UserAccount) {
+        this.userAccount = userAccount
+        Handler().post { tabsPagerAdapter.notifyDataSetChanged() }
+    }
+
+    private fun isLoggedIn(): Boolean {
+        return userAccount != null
     }
 
     inner class TabsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
@@ -47,8 +55,8 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> {
-                    if (isLoggedIn) {
-                        UserProfileFragment.newInstance()
+                    if (isLoggedIn()) {
+                        UserProfileFragment.newInstance(userAccount!!)
                     } else {
                         UserLoginFragment.newInstance()
                     }
@@ -65,11 +73,11 @@ class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
         }
 
         override fun getItemPosition(item: Any): Int {
-            if (item is UserProfileFragment && !isLoggedIn) {
+            if (item is UserProfileFragment && !isLoggedIn()) {
                 return PagerAdapter.POSITION_NONE
             }
 
-            if (item is UserLoginFragment && isLoggedIn) {
+            if (item is UserLoginFragment && isLoggedIn()) {
                 return PagerAdapter.POSITION_NONE
             }
 

@@ -32,7 +32,6 @@
         <activity
             android:name=".PetProfileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_pet_profile"
             android:screenOrientation="portrait"
 
             android:theme="@style/AppTheme.NoActionBar" />

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -77,7 +78,9 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
 
         class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             fun bindPet(pet: Pet) {
-                Glide.with(view.context).load(pet.photo).into(view.pet_photo)
+                Glide.with(view).load(pet.photo)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(view.pet_photo)
 
                 view.pet_name.text = pet.name
                 view.pet_short_description.text = pet.short_description

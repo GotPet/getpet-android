@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.data.Pet
@@ -16,7 +17,9 @@ class PetProfileActivity : AppCompatActivity() {
 
 
         val pet = intent.getParcelableExtra<Pet>("pet")
-        Glide.with(this).load(pet.photo).into(pet_image)
+        Glide.with(pet_image).load(pet.photo)
+                .apply(RequestOptions.circleCropTransform())
+                .into(pet_image)
         pet_name.text = pet.name
         pet_description.text = pet.description
         pet_short_description.text = pet.short_description

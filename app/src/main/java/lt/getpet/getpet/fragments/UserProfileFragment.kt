@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.person_account.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.UserAccount
@@ -30,7 +31,9 @@ class UserProfileFragment : Fragment() {
 
         user_name.text = userAccount.name
         if (userAccount.photo_url != null) {
-            Glide.with(this).load(userAccount.photo_url).into(user_photo)
+            Glide.with(user_photo).load(userAccount.photo_url)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(user_photo)
         }
     }
 

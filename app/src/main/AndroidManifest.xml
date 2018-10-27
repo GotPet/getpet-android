@@ -37,6 +37,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GetPetActivity" />
 
+
+        <meta-data
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -16,7 +16,7 @@ class GetPetActivity : AppCompatActivity() {
 
         val pet = intent.getParcelableExtra<Pet>("pet")
 
-        Glide.with(get_pet_image).load(pet.photo)
+        Glide.with(this).load(pet.photo)
                 .apply(RequestOptions.circleCropTransform())
                 .into(get_pet_image)
 

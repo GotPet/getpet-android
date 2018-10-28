@@ -31,7 +31,7 @@ class UserProfileFragment : Fragment() {
 
         user_name.text = userAccount.name
         if (userAccount.photo_url != null) {
-            Glide.with(user_photo).load(userAccount.photo_url)
+            Glide.with(this).load(userAccount.photo_url)
                     .apply(RequestOptions.circleCropTransform())
                     .into(user_photo)
         }

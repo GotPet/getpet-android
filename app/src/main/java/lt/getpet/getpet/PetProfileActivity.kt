@@ -17,7 +17,7 @@ class PetProfileActivity : AppCompatActivity() {
 
 
         val pet = intent.getParcelableExtra<Pet>("pet")
-        Glide.with(pet_image).load(pet.photo)
+        Glide.with(this).load(pet.photo)
                 .apply(RequestOptions.circleCropTransform())
                 .into(pet_image)
         pet_name.text = pet.name

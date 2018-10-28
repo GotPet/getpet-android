@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:paddingTop="36dp"
-    android:background="@color/colorPrimary"
-    tools:context=".MainActivity"
-    >
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/user_photo"
@@ -15,15 +14,13 @@
         android:layout_height="160dp"
         android:layout_margin="16dp"
         android:scaleType="centerInside"
-        android:src="@drawable/dogis_kacius"
-        />
+        android:src="@drawable/dogis_kacius" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/user_name"
@@ -31,31 +28,29 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="center"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
             android:maxLines="1"
             android:text="Dogis Kacius"
             android:textColor="@color/colorAccent"
             android:textSize="30sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/get_pet_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginStart="16dp"
-            android:gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="36dp"
             android:fontFamily="@font/roboto"
+            android:gravity="center"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
-            tools:text="Ieškau draugo"
-            />
+            tools:text="Ieškau draugo" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -63,8 +58,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:scaleType="centerInside"
-            android:src="@drawable/two_logos"
-            />
+            android:src="@drawable/two_logos" />
 
     </LinearLayout>
 

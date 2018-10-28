@@ -24,10 +24,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="O ne! Sąrašas jau baigėsi. \nPatikrink savo favoritų sąrašą."
+            android:text="@string/no_more_pets_to_swipe"
             android:textColor="@color/colorTextLighter"
-            android:textSize="24sp"
-            android:visibility="visible" />
+            android:textSize="24sp" />
     </LinearLayout>
 
     <com.yuyakaido.android.cardstackview.CardStackView

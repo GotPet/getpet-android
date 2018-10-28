@@ -8,14 +8,12 @@
     android:layout_height="match_parent"
     app:cardUseCompatPadding="true"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="12dp"
-    >
+    card_view:cardCornerRadius="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
 
         <ImageView
             android:id="@+id/pet_image"
@@ -26,16 +24,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pet_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_medium"
             android:maxLines="1"
@@ -44,24 +41,22 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/pet_short_description"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Dogis"
-            />
+            tools:text="Dogis" />
 
         <TextView
             android:id="@+id/pet_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:background="@color/colorPrimary"
             android:ellipsize="end"
             android:fontFamily="@font/roboto"
             android:maxLines="2"
+            android:padding="12dp"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Ieskau draugo"
-            />
+            tools:text="Ieskau draugo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

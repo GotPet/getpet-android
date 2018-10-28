@@ -63,12 +63,11 @@
                 android:id="@+id/pet_short_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/text_medium"
-                tools:text="Labai grazus suniukas dogis iesko namu"
-                />
+                tools:text="Labai grazus suniukas dogis iesko namu" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,8 +76,7 @@
                 android:text="@string/my_story"
                 android:textColor="@color/colorTextLighter"
                 android:textSize="@dimen/text_large"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pet_description"
@@ -113,7 +111,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:elevation="6dp"
-        android:text="Noriu priglausti"
+        android:text="@string/button_get_pet"
         android:textAllCaps="true"
         android:textColor="@color/colorText"
         android:textSize="14sp"

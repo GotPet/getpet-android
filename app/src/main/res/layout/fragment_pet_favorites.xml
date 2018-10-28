@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FavoritePetsFragment"
-    tools:showIn="@layout/activity_pet_favorites">
+    tools:context=".fragments.FavoritePetsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pets_recycler_view"

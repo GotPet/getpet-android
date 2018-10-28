@@ -157,6 +157,7 @@ class PetSwipeFragment : Fragment() {
 
                 if (pos == adapter.count - 1) {
                     showNoPets()
+                    return
                 }
 
                 val pet = adapter.getItem(pos)

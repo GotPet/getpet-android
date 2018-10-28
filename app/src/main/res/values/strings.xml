@@ -6,7 +6,7 @@
     <string name="my_story">Mano istorija</string>
 
     <!--BUTTON STRINGS-->
-    <string name="button_login_with_google">Prisijunk su Google+</string>
+    <string name="button_login_with_google">Prisijunk su Google</string>
     <string name="button_login_with_facebook">Prisijunk su Facebook</string>
-    <string name="button_get_pet">Get Pet</string>
+    <string name="button_get_pet">Noriu priglausti</string>
 </resources>

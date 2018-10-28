@@ -1,5 +1,9 @@
 package lt.getpet.getpet.fragments
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,7 +27,9 @@ import lt.getpet.getpet.persistence.PetDao
 import lt.getpet.getpet.persistence.PetsDatabase
 import timber.log.Timber
 
+
 class PetSwipeFragment : Fragment() {
+
     private var subscriptions: CompositeDisposable = CompositeDisposable()
     lateinit var adapter: PetAdapter
     private lateinit var petsDao: PetDao
@@ -51,6 +57,13 @@ class PetSwipeFragment : Fragment() {
         subscriptions.clear()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ACTIVITY_RESULT_PET_FAVORITE && resultCode == RESULT_OK) {
+            swipeRight()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
 
     private fun showPets(petsList: List<Pet>) {
         adapter = PetAdapter(context!!)
@@ -62,6 +75,32 @@ class PetSwipeFragment : Fragment() {
         } else {
             showNoPets()
         }
+    }
+
+    private fun swipeRight() {
+        val target = activity_main_card_stack_view.topView
+        val targetOverlay = activity_main_card_stack_view.topView.overlayContainer
+
+        val rotation = ObjectAnimator.ofPropertyValuesHolder(
+                target, PropertyValuesHolder.ofFloat("rotation", -10f))
+        rotation.duration = 200
+        val translateX = ObjectAnimator.ofPropertyValuesHolder(
+                target, PropertyValuesHolder.ofFloat("translationX", 0f, -2000f))
+        val translateY = ObjectAnimator.ofPropertyValuesHolder(
+                target, PropertyValuesHolder.ofFloat("translationY", 0f, 500f))
+        translateX.startDelay = 100
+        translateY.startDelay = 100
+        translateX.duration = 500
+        translateY.duration = 500
+        val cardAnimationSet = AnimatorSet()
+        cardAnimationSet.playTogether(rotation, translateX, translateY)
+
+        val overlayAnimator = ObjectAnimator.ofFloat(targetOverlay, "alpha", 0f, 1f)
+        overlayAnimator.duration = 200
+        val overlayAnimationSet = AnimatorSet()
+        overlayAnimationSet.playTogether(overlayAnimator)
+
+        activity_main_card_stack_view.swipe(SwipeDirection.Right, cardAnimationSet, overlayAnimationSet)
     }
 
     private fun changeState(state: State) {
@@ -138,7 +177,8 @@ class PetSwipeFragment : Fragment() {
                 val pet = adapter.getItem(index)
                 val intent = Intent(context, PetProfileActivity::class.java)
                 intent.putExtra("pet", pet)
-                startActivity(intent)
+
+                startActivityForResult(intent, ACTIVITY_RESULT_PET_FAVORITE)
             }
         })
     }
@@ -156,5 +196,7 @@ class PetSwipeFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = PetSwipeFragment()
+
+        private const val ACTIVITY_RESULT_PET_FAVORITE = 1001
     }
 }

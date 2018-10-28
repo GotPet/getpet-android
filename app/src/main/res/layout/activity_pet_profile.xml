@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"
+    tools:context="lt.getpet.getpet.PetProfileActivity">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:fitsSystemWindows="true">
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:toolbarId="@+id/toolbar">
+
+
+            <ImageView
+                android:id="@+id/pet_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                tools:src="@drawable/doggie_lui_peng_unsplash" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/pet_image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="16dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/doggie_lui_peng_unsplash" />
-
-            <TextView
-                android:id="@+id/pet_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Dogis"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-                app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/pet_short_description"
@@ -47,14 +62,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Labai grazus suniukas dogis iesko namu"
                 android:textColor="@color/colorText"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                tools:text="Labai grazus suniukas dogis iesko namu" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,9 +81,7 @@
                 android:text="Mano istorija"
                 android:textColor="@color/colorTextLighter"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pet_description"
@@ -82,41 +94,49 @@
                 android:layout_marginRight="16dp"
                 android:text="Labai grazus suniukas dogis iesko namu"
                 android:textColor="@color/colorText"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/ar_priglausi_mane"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                tools:fontFamily="@font/roboto" />
+
+            <Button
+                android:id="@+id/button_get_pet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Get Pet"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="22sp"
+                android:textStyle="bold" />
         </LinearLayout>
-    </ScrollView>
 
-    <TextView
-        android:id="@+id/service"
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_favorite_pet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="24dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/ar_priglausi_mane"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:fontFamily="@font/roboto" />
+        android:layout_margin="@dimen/fab_margin"
+        app:fabSize="normal"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/heart" />
 
-    <Button
-        android:id="@+id/button_get_pet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorPrimary"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="Get Pet"
-        android:textAllCaps="false"
-        android:textColor="@color/colorAccent"
-        android:textSize="22dp"
-        android:textStyle="bold" />
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

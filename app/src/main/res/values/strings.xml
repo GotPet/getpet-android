@@ -2,4 +2,11 @@
     <string name="app_name_production">Get Pet</string>
     <string name="app_name_debug">Get Pet Debug</string>
     <string name="ar_priglausi_mane">\"Ar priglausi mane?\"</string>
+    <string name="join_us">Prisijunk</string>
+    <string name="my_story">Mano istorija</string>
+
+    <!--BUTTON STRINGS-->
+    <string name="button_login_with_google">Prisijunk su Google+</string>
+    <string name="button_login_with_facebook">Prisijunk su Facebook</string>
+    <string name="button_get_pet">Get Pet</string>
 </resources>

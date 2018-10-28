@@ -10,8 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import kotlinx.android.synthetic.main.activity_user_login.*
 import lt.getpet.getpet.R
+import kotlinx.android.synthetic.main.activity_user_login.*
 import lt.getpet.getpet.data.Provider
 import lt.getpet.getpet.data.UserAccount
 import timber.log.Timber
@@ -40,7 +40,7 @@ class UserLoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        silentrySignInWithGoogle()
+        silentlySignInWithGoogle()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -50,7 +50,7 @@ class UserLoginFragment : Fragment() {
         }
     }
 
-    private fun silentrySignInWithGoogle() {
+    private fun silentlySignInWithGoogle() {
         val existingAccount = GoogleSignIn.getLastSignedInAccount(context)
         if (existingAccount != null) {
             signInWithGoogleAccount(existingAccount)

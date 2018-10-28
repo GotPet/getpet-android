@@ -21,4 +21,15 @@
         <item name="android:windowBackground">@drawable/background_splash_screen</item>
     </style>
 
+    <style name="TextViewTitle">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_20</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextViewBody">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
 </resources>

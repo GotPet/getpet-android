@@ -175,10 +175,9 @@ class PetSwipeFragment : Fragment() {
             }
 
             override fun onCardClicked(index: Int) {
-                val pet = adapter.getItem(index)
-                val intent = Intent(context, PetProfileActivity::class.java)
-                intent.putExtra("pet", pet)
+                val pet = adapter.getItem(index)!!
 
+                val intent = PetProfileActivity.getStartActivityIntent(context!!, pet, true)
                 startActivityForResult(intent, ACTIVITY_RESULT_PET_FAVORITE)
             }
         })

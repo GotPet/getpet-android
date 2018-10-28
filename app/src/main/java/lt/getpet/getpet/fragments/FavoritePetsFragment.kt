@@ -1,12 +1,12 @@
 package lt.getpet.getpet.fragments
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,13 +36,12 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
         return inflater.inflate(R.layout.fragment_pet_favorites, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        petsAdapter = PetsAdapter(emptyList())
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        petsAdapter = PetsAdapter(context!!, emptyList())
+
 
         recyclerView = pets_recycler_view.apply {
             setHasFixedSize(true)
@@ -69,16 +68,16 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
         petsAdapter.notifyDataSetChanged()
     }
 
-    class PetsAdapter(var pets: List<Pet>) :
+    class PetsAdapter(val context: Context, var pets: List<Pet>) :
             RecyclerView.Adapter<PetsAdapter.MyViewHolder>() {
 
         override fun getItemId(position: Int): Long {
             return pets[position].id
         }
 
-        class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        class MyViewHolder(val context: Context, val view: View) : RecyclerView.ViewHolder(view) {
             fun bindPet(pet: Pet) {
-                Glide.with(view).load(pet.photo)
+                Glide.with(context).load(pet.photo)
                         .apply(RequestOptions.circleCropTransform())
                         .into(view.pet_photo)
 
@@ -86,9 +85,8 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
                 view.pet_short_description.text = pet.short_description
 
                 view.setOnClickListener {
-                    val intent = Intent(view.context, PetProfileActivity::class.java)
-                    intent.putExtra("pet", pet)
-                    view.context.startActivity(intent)
+                    val intent = PetProfileActivity.getStartActivityIntent(context, pet, false)
+                    context.startActivity(intent)
                 }
             }
 
@@ -100,7 +98,7 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.pet_favorite_cell, parent, false)
 
-            return MyViewHolder(view)
+            return MyViewHolder(context, view)
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

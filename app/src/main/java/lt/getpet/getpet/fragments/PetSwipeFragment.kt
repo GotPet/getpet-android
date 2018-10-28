@@ -155,7 +155,7 @@ class PetSwipeFragment : Fragment() {
             override fun onCardSwiped(direction: SwipeDirection) {
                 val pos = activity_main_card_stack_view.topIndex - 1
 
-                if (pos == adapter.count - 1) {
+                if (pos >= adapter.count - 1) {
                     showNoPets()
                     return
                 }

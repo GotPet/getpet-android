@@ -22,8 +22,9 @@
             android:src="@drawable/no_pets" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/no_more_pets_to_swipe"
             android:textColor="@color/colorTextLighter"
             android:textSize="24sp" />

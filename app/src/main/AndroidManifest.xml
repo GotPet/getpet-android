@@ -33,7 +33,10 @@
             android:name=".PetProfileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".GetPetActivity" />
+        <activity
+            android:name=".GetPetActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
 
         <meta-data

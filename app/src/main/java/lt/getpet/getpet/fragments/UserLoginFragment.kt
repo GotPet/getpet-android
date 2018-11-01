@@ -11,11 +11,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_user_login.*
 import lt.getpet.getpet.R
+import lt.getpet.getpet.dagger.module.NavigationModule
 import lt.getpet.getpet.data.Provider
 import lt.getpet.getpet.data.UserAccount
+import lt.getpet.getpet.navigation.NavigationManager
 import timber.log.Timber
+import javax.inject.Inject
 
 class UserLoginFragment : BaseFragment() {
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
     private var callback: UserLoginCallback? = null
 
@@ -27,7 +33,7 @@ class UserLoginFragment : BaseFragment() {
 
 
         button_facebook.setOnClickListener {
-//            callback?.onUserLoggedIn(userAccount)
+            navigationManager.navigateToUserLogin(activity!!)
         }
 
         button_google.setOnClickListener {

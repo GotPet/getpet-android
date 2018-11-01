@@ -12,6 +12,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="AppTheme" />
 
+    <style name="AppTheme.Auth" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+
+    </style>
+
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/background_splash_screen</item>
     </style>

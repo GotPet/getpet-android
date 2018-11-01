@@ -15,10 +15,15 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
 import lt.getpet.getpet.data.UserAccount
+import lt.getpet.getpet.navigation.NavigationManager
+import lt.getpet.getpet.network.PetApiService
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity(), UserLoginFragment.UserLoginCallback {
 
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
     private var userAccount: UserAccount? = null
     private var subscription: Disposable? = null

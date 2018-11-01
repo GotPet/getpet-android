@@ -6,6 +6,13 @@
     <string name="my_story">Mano istorija</string>
     <string name="no_more_pets_to_swipe">O ne!\nSąrašas jau baigėsi.\nPatikrink savo favoritų sąrašą</string>
 
+    <string name="facebook_application_id" translatable="false">1043794185794352</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1043794185794352</string>
+
+    <string name="fui_sign_in_with_google" translation_description="Sign in button text">Prisijunk su Google</string>
+    <string name="fui_sign_in_with_facebook" translation_description="Sign in button text">Prisijunk su Facebook</string>
+
+
     <!--BUTTON STRINGS-->
     <string name="button_login_with_google">Prisijunk su Google</string>
     <string name="button_login_with_facebook">Prisijunk su Facebook</string>

@@ -9,20 +9,22 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_pet_favorites.*
 import kotlinx.android.synthetic.main.pet_favorite_cell.view.*
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.persistence.PetsDatabase
+import lt.getpet.getpet.persistence.PetDao
+import javax.inject.Inject
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class FavoritePetsFragment : androidx.fragment.app.Fragment() {
+class FavoritePetsFragment : BaseFragment() {
+
+    @Inject
+    lateinit var petsDao: PetDao
 
     private var subscription: Disposable? = null
 
@@ -48,9 +50,9 @@ class FavoritePetsFragment : androidx.fragment.app.Fragment() {
             adapter = petsAdapter
         }
 
-        subscription = PetsDatabase.getInstance(context!!).petsDao().getFavoritePets()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        subscription = petsDao.getFavoritePets()
+                .subscribeOn(dbScheduler)
+                .observeOn(uiScheduler)
                 .subscribe({ it ->
                     showPets(it)
                 }, {

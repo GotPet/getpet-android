@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.SwipeDirection
 import io.reactivex.Single
@@ -26,24 +25,25 @@ import lt.getpet.getpet.data.PetChoice
 import lt.getpet.getpet.persistence.PetDao
 import lt.getpet.getpet.persistence.PetsDatabase
 import timber.log.Timber
+import javax.inject.Inject
 
 
-class PetSwipeFragment : Fragment() {
+class PetSwipeFragment : BaseFragment() {
+
+    @Inject
+    lateinit var petsDao: PetDao
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
     lateinit var adapter: PetAdapter
-    private lateinit var petsDao: PetDao
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        petsDao = PetsDatabase.getInstance(context!!).petsDao()
-
         setup()
 
         val disposable = petsDao.getRemainingPets()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(dbScheduler)
+                .observeOn(uiScheduler)
                 .subscribe({ it ->
                     showPets(it)
                 }, {
@@ -133,8 +133,8 @@ class PetSwipeFragment : Fragment() {
         val disposable = Single.fromCallable {
             petsDao.insertPetChoice(petChoice)
         }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(dbScheduler)
+                .observeOn(uiScheduler)
                 .subscribe({
                     Timber.d("Saved pet choice: $petChoice")
                 }, {

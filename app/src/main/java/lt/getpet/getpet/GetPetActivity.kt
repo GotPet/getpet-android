@@ -7,7 +7,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.data.Pet
 
-class GetPetActivity : AppCompatActivity() {
+class GetPetActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

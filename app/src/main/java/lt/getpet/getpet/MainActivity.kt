@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout
 import lt.getpet.getpet.data.UserAccount
 
 
-class MainActivity : AppCompatActivity(), UserLoginFragment.UserLoginCallback {
+class MainActivity : BaseActivity(), UserLoginFragment.UserLoginCallback {
 
 
     private var userAccount: UserAccount? = null

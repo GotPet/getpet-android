@@ -14,26 +14,4 @@ interface PetApiService {
 
     @GET("api/v1/pets")
     fun getPets(): Single<List<Pet>>
-
-    companion object {
-        fun create(): PetApiService {
-            val clientBuilder = OkHttpClient.Builder()
-
-            if (BuildConfig.DEBUG) {
-                val interceptor = HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BASIC
-                }
-                clientBuilder.addInterceptor(interceptor)
-            }
-
-            val retrofit = Retrofit.Builder()
-                    .addConverterFactory(MoshiConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl("https://www.getpet.lt/")
-                    .client(clientBuilder.build())
-                    .build()
-
-            return retrofit.create(PetApiService::class.java)
-        }
-    }
 }

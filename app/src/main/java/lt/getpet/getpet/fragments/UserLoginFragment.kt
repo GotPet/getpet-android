@@ -2,7 +2,6 @@ package lt.getpet.getpet.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import lt.getpet.getpet.R
 import kotlinx.android.synthetic.main.activity_user_login.*
+import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Provider
 import lt.getpet.getpet.data.UserAccount
 import timber.log.Timber
 
-class UserLoginFragment : Fragment() {
+class UserLoginFragment : BaseFragment() {
 
     private var callback: UserLoginCallback? = null
 

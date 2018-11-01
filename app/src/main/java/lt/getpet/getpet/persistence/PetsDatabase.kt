@@ -12,21 +12,4 @@ import lt.getpet.getpet.data.PetChoice
 abstract class PetsDatabase : RoomDatabase() {
 
     abstract fun petsDao(): PetDao
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: PetsDatabase? = null
-
-        fun getInstance(context: Context): PetsDatabase =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-                }
-
-        private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext,
-                        PetsDatabase::class.java, "Pets.db")
-                        .fallbackToDestructiveMigration()
-                        .build()
-    }
 }

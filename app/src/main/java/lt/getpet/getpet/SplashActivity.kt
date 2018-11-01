@@ -2,17 +2,22 @@ package lt.getpet.getpet
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import lt.getpet.getpet.network.PetApiService
-import lt.getpet.getpet.persistence.PetsDatabase
+import lt.getpet.getpet.persistence.PetDao
 import timber.log.Timber
+import javax.inject.Inject
 
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
+
+    @Inject
+    lateinit var apiService: PetApiService
+
+    @Inject
+    lateinit var petsDao: PetDao
+
 
     private var subscription: Disposable? = null
 
@@ -20,12 +25,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        subscription = PetApiService.create().getPets()
-                .subscribeOn(Schedulers.io())
+        subscription = apiService.getPets()
+                .subscribeOn(ioScheduler)
                 .map { pets ->
-                    PetsDatabase.getInstance(this).petsDao().insertPets(pets)
+                    petsDao.insertPets(pets)
                 }
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(uiScheduler)
                 .subscribe({
                     showMainActivity()
                 }, { t ->
@@ -39,7 +44,6 @@ class SplashActivity : AppCompatActivity() {
 
         startActivity(loadMainActivity)
         finish()
-
     }
 
     override fun onDestroy() {

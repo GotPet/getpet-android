@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.person_account.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.UserAccount
 
-class UserProfileFragment : Fragment() {
+class UserProfileFragment : BaseFragment() {
 
     private lateinit var userAccount: UserAccount
 

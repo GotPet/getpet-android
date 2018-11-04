@@ -3,7 +3,7 @@ package lt.getpet.getpet
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import io.reactivex.disposables.Disposable
+import io.reactivex.Single
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
 import timber.log.Timber
@@ -19,24 +19,32 @@ class SplashActivity : BaseActivity() {
     lateinit var petsDao: PetDao
 
 
-    private var subscription: Disposable? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        subscription = apiService.getPets()
-                .subscribeOn(ioScheduler)
-                .map { pets ->
-                    petsDao.insertPets(pets)
-                }
-                .observeOn(uiScheduler)
-                .subscribe({
-                    showMainActivity()
-                }, { t ->
-                    Timber.w(t)
-                    Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
-                })
+        subscriptions.add(
+                apiService.getPets()
+                        .subscribeOn(ioScheduler)
+                        .map { pets ->
+                            petsDao.insertPets(pets)
+                        }.flatMap {
+                            val user = authenticationManager.getCurrentUser()
+
+                            if (user == null) {
+                                authenticationManager.signInAnonymously(this)
+                            } else {
+                                Single.just(user)
+                            }
+                        }
+                        .observeOn(uiScheduler)
+                        .subscribe({
+                            showMainActivity()
+                        }, { t ->
+                            Timber.w(t)
+                            Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
+                        })
+        )
     }
 
     private fun showMainActivity() {
@@ -44,11 +52,5 @@ class SplashActivity : BaseActivity() {
 
         startActivity(loadMainActivity)
         finish()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        subscription?.dispose()
-
     }
 }

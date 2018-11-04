@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.pet_favorite_cell.view.*
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.persistence.PetDao
 import javax.inject.Inject
 
@@ -25,6 +26,9 @@ class FavoritePetsFragment : BaseFragment() {
 
     @Inject
     lateinit var petsDao: PetDao
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
     private var subscription: Disposable? = null
 
@@ -42,7 +46,7 @@ class FavoritePetsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        petsAdapter = PetsAdapter(context!!, emptyList())
+        petsAdapter = PetsAdapter(context!!, navigationManager, emptyList())
 
 
         recyclerView = pets_recycler_view.apply {
@@ -70,14 +74,15 @@ class FavoritePetsFragment : BaseFragment() {
         petsAdapter.notifyDataSetChanged()
     }
 
-    class PetsAdapter(val context: Context, var pets: List<Pet>) :
+    class PetsAdapter(val context: Context, val navigationManager: NavigationManager, var pets: List<Pet>) :
             RecyclerView.Adapter<PetsAdapter.MyViewHolder>() {
 
         override fun getItemId(position: Int): Long {
             return pets[position].id
         }
 
-        class MyViewHolder(val context: Context, val view: View) : RecyclerView.ViewHolder(view) {
+        class MyViewHolder(val context: Context, val navigationManager: NavigationManager,
+                           val view: View) : RecyclerView.ViewHolder(view) {
             fun bindPet(pet: Pet) {
                 Glide.with(context).load(pet.photo)
                         .apply(RequestOptions.circleCropTransform())
@@ -87,8 +92,7 @@ class FavoritePetsFragment : BaseFragment() {
                 view.pet_short_description.text = pet.short_description
 
                 view.setOnClickListener {
-                    val intent = PetProfileActivity.getStartActivityIntent(context, pet, false)
-                    context.startActivity(intent)
+                    navigationManager.navigateToPetProfileActivity(context, pet, false)
                 }
             }
 
@@ -100,7 +104,7 @@ class FavoritePetsFragment : BaseFragment() {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.pet_favorite_cell, parent, false)
 
-            return MyViewHolder(context, view)
+            return MyViewHolder(context, navigationManager, view)
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

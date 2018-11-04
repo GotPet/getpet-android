@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_get_pet.*
+import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.data.Pet
 
 class GetPetActivity : BaseActivity() {
@@ -14,7 +15,7 @@ class GetPetActivity : BaseActivity() {
         setContentView(R.layout.activity_get_pet)
 
 
-        val pet = intent.getParcelableExtra<Pet>("pet")
+        val pet = intent.getParcelableExtra<Pet>(EXTRA_PET)
 
         Glide.with(this).load(pet.photo)
                 .apply(RequestOptions.circleCropTransform())

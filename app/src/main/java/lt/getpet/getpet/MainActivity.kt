@@ -3,7 +3,6 @@ package lt.getpet.getpet
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_main.*
 import io.reactivex.disposables.Disposable
@@ -14,9 +13,8 @@ import lt.getpet.getpet.fragments.UserLoginFragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.tabs.TabLayout
-import lt.getpet.getpet.data.UserAccount
+import lt.getpet.getpet.data.RegularUser
 import lt.getpet.getpet.navigation.NavigationManager
-import lt.getpet.getpet.network.PetApiService
 import javax.inject.Inject
 
 
@@ -25,8 +23,7 @@ class MainActivity : BaseActivity(), UserLoginFragment.UserLoginCallback {
     @Inject
     lateinit var navigationManager: NavigationManager
 
-    private var userAccount: UserAccount? = null
-    private var subscription: Disposable? = null
+    private var regularUser: RegularUser? = null
     private val tabsPagerAdapter: TabsPagerAdapter by lazy { TabsPagerAdapter(supportFragmentManager) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +37,13 @@ class MainActivity : BaseActivity(), UserLoginFragment.UserLoginCallback {
         view_pager.currentItem = 1
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        subscription?.dispose()
-    }
-
-    override fun onUserLoggedIn(userAccount: UserAccount) {
-        this.userAccount = userAccount
+    override fun onUserLoggedIn(regularUser: RegularUser) {
+        this.regularUser = regularUser
         Handler().post { tabsPagerAdapter.notifyDataSetChanged() }
     }
 
     private fun isLoggedIn(): Boolean {
-        return userAccount != null
+        return regularUser != null
     }
 
     inner class TabsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
@@ -61,7 +53,7 @@ class MainActivity : BaseActivity(), UserLoginFragment.UserLoginCallback {
             return when (position) {
                 0 -> {
                     if (isLoggedIn()) {
-                        UserProfileFragment.newInstance(userAccount!!)
+                        UserProfileFragment.newInstance(regularUser!!)
                     } else {
                         UserLoginFragment.newInstance()
                     }

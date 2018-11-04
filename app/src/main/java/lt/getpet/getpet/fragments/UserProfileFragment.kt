@@ -8,16 +8,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.person_account.*
 import lt.getpet.getpet.R
-import lt.getpet.getpet.data.UserAccount
+import lt.getpet.getpet.data.RegularUser
 
 class UserProfileFragment : BaseFragment() {
 
-    private lateinit var userAccount: UserAccount
+    private lateinit var regularUser: RegularUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        userAccount = arguments!!.getParcelable(EXTRA_PERSON_ACCOUNT)!!
+        regularUser = arguments!!.getParcelable(EXTRA_PERSON_ACCOUNT)!!
     }
 
 
@@ -28,9 +28,9 @@ class UserProfileFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        user_name.text = userAccount.name
-        if (userAccount.photo_url != null) {
-            Glide.with(this).load(userAccount.photo_url)
+        user_name.text = regularUser.name
+        if (regularUser.photo_url != null) {
+            Glide.with(this).load(regularUser.photo_url)
                     .apply(RequestOptions.circleCropTransform())
                     .into(user_photo)
         }
@@ -40,9 +40,9 @@ class UserProfileFragment : BaseFragment() {
         private const val EXTRA_PERSON_ACCOUNT = "EXTRA_PERSON_ACCOUNT"
 
         @JvmStatic
-        fun newInstance(userAccount: UserAccount): UserProfileFragment {
+        fun newInstance(regularUser: RegularUser): UserProfileFragment {
             val bundle = Bundle().apply {
-                putParcelable(EXTRA_PERSON_ACCOUNT, userAccount)
+                putParcelable(EXTRA_PERSON_ACCOUNT, regularUser)
             }
 
             return UserProfileFragment().apply {

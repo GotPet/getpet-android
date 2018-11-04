@@ -4,15 +4,24 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 
+sealed class User
+
+@Parcelize
+data class GuestUser(
+        val userId: String
+) : User(), Parcelable
+
+
 enum class Provider {
-    GOOGLE
+    GOOGLE,
+    FACEBOOK
 }
 
 @Parcelize
-data class UserAccount(
+data class RegularUser(
         val name: String,
         val email: String,
         val photo_url: String?,
         val provider: Provider
-) : Parcelable
+) : User(), Parcelable
 

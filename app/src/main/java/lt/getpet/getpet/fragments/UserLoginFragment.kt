@@ -11,9 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_user_login.*
 import lt.getpet.getpet.R
-import lt.getpet.getpet.dagger.module.NavigationModule
 import lt.getpet.getpet.data.Provider
-import lt.getpet.getpet.data.UserAccount
+import lt.getpet.getpet.data.RegularUser
 import lt.getpet.getpet.navigation.NavigationManager
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,7 +32,7 @@ class UserLoginFragment : BaseFragment() {
 
 
         button_facebook.setOnClickListener {
-            navigationManager.navigateToUserLogin(activity!!)
+            navigationManager.navigateToUserLoginActivity(activity!!)
         }
 
         button_google.setOnClickListener {
@@ -87,7 +86,7 @@ class UserLoginFragment : BaseFragment() {
 
 
     private fun signInWithGoogleAccount(account: GoogleSignInAccount) {
-        val userAccount = UserAccount(
+        val userAccount = RegularUser(
                 name = account.displayName!!,
                 email = account.email!!,
                 photo_url = account.photoUrl?.toString(),
@@ -102,7 +101,7 @@ class UserLoginFragment : BaseFragment() {
 
 
     interface UserLoginCallback {
-        fun onUserLoggedIn(userAccount: UserAccount)
+        fun onUserLoggedIn(regularUser: RegularUser)
     }
 
     companion object {

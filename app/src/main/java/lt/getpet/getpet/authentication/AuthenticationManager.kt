@@ -71,6 +71,7 @@ class AuthenticationManager {
                 .createSignInIntentBuilder()
                 .setAvailableProviders(firebaseProviders)
                 .setAlwaysShowSignInMethodScreen(true)
+                .enableAnonymousUsersAutoUpgrade()
                 .setTheme(R.style.AppTheme_Auth)
                 .setLogo(R.drawable.get_pet_logo)
                 .build()

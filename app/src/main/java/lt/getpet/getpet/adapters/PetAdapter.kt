@@ -25,4 +25,8 @@ class PetAdapter(context: Context) : ArrayAdapter<Pet>(context, 0) {
         return view
     }
 
+    override fun getItemId(position: Int): Long {
+        return getItem(position)!!.id
+    }
+
 }

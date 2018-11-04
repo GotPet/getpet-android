@@ -13,17 +13,15 @@ import android.widget.Toast
 import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.SwipeDirection
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_swipe.*
-import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
 import lt.getpet.getpet.adapters.PetAdapter
+import lt.getpet.getpet.constants.ActivityConstants.Companion.PET_FAVORITE
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.data.PetChoice
+import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.persistence.PetDao
-import lt.getpet.getpet.persistence.PetsDatabase
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,6 +30,9 @@ class PetSwipeFragment : BaseFragment() {
 
     @Inject
     lateinit var petsDao: PetDao
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
     lateinit var adapter: PetAdapter
@@ -58,7 +59,7 @@ class PetSwipeFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ACTIVITY_RESULT_PET_FAVORITE && resultCode == RESULT_OK) {
+        if (requestCode == PET_FAVORITE && resultCode == RESULT_OK) {
             swipeRight()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
@@ -177,8 +178,7 @@ class PetSwipeFragment : BaseFragment() {
             override fun onCardClicked(index: Int) {
                 val pet = adapter.getItem(index)!!
 
-                val intent = PetProfileActivity.getStartActivityIntent(context!!, pet, true)
-                startActivityForResult(intent, ACTIVITY_RESULT_PET_FAVORITE)
+                navigationManager.navigateToPetProfileActivity(activity!!, pet, false)
             }
         })
     }
@@ -196,7 +196,5 @@ class PetSwipeFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance() = PetSwipeFragment()
-
-        private const val ACTIVITY_RESULT_PET_FAVORITE = 1001
     }
 }

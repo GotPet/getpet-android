@@ -1,9 +1,9 @@
 package lt.getpet.getpet
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import io.reactivex.Single
+import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
 import timber.log.Timber
@@ -17,6 +17,9 @@ class SplashActivity : BaseActivity() {
 
     @Inject
     lateinit var petsDao: PetDao
+
+    @Inject
+    lateinit var navigationManager: NavigationManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +51,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun showMainActivity() {
-        val loadMainActivity = Intent(this@SplashActivity, MainActivity::class.java)
-
-        startActivity(loadMainActivity)
+        navigationManager.navigateToMainActivity(this)
         finish()
     }
 }

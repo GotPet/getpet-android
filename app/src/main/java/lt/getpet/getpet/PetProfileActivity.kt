@@ -1,13 +1,11 @@
 package lt.getpet.getpet
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_pet_profile.*
-import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_FAVORITE_BUTTON
 import lt.getpet.getpet.data.Pet
@@ -55,16 +53,6 @@ class PetProfileActivity : BaseActivity() {
             fab_favorite_pet.visibility = View.VISIBLE
         } else {
             fab_favorite_pet.visibility = View.GONE
-        }
-    }
-
-    companion object {
-
-        fun getStartActivityIntent(context: Context, pet: Pet, showFavoriteButton: Boolean): Intent {
-            return Intent(context, PetProfileActivity::class.java).apply {
-                putExtra(EXTRA_PET, pet)
-                putExtra(EXTRA_SHOW_FAVORITE_BUTTON, showFavoriteButton)
-            }
         }
     }
 }

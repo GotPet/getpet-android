@@ -12,17 +12,13 @@ import com.bumptech.glide.request.RequestOptions
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_pet_favorites.*
 import kotlinx.android.synthetic.main.pet_favorite_cell.view.*
-import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.persistence.PetDao
 import javax.inject.Inject
 
-/**
- * A placeholder fragment containing a simple view.
- */
-class FavoritePetsFragment : BaseFragment() {
+class FavoritePetsFragment : BaseFragment(), PetClickedListener {
 
     @Inject
     lateinit var petsDao: PetDao
@@ -46,7 +42,7 @@ class FavoritePetsFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        petsAdapter = PetsAdapter(context!!, navigationManager, emptyList())
+        petsAdapter = PetsAdapter(context!!, this, emptyList())
 
 
         recyclerView = pets_recycler_view.apply {
@@ -64,6 +60,10 @@ class FavoritePetsFragment : BaseFragment() {
                 })
     }
 
+    override fun onPetClicked(pet: Pet) {
+        navigationManager.navigateToPetProfileActivity(activity!!, pet, false)
+    }
+
     override fun onDetach() {
         super.onDetach()
         subscription?.dispose()
@@ -74,14 +74,14 @@ class FavoritePetsFragment : BaseFragment() {
         petsAdapter.notifyDataSetChanged()
     }
 
-    class PetsAdapter(val context: Context, val navigationManager: NavigationManager, var pets: List<Pet>) :
+    class PetsAdapter(val context: Context, private val listener: PetClickedListener, var pets: List<Pet>) :
             RecyclerView.Adapter<PetsAdapter.MyViewHolder>() {
 
         override fun getItemId(position: Int): Long {
             return pets[position].id
         }
 
-        class MyViewHolder(val context: Context, val navigationManager: NavigationManager,
+        class MyViewHolder(val context: Context, private val listener: PetClickedListener,
                            val view: View) : RecyclerView.ViewHolder(view) {
             fun bindPet(pet: Pet) {
                 Glide.with(context).load(pet.photo)
@@ -92,7 +92,7 @@ class FavoritePetsFragment : BaseFragment() {
                 view.pet_short_description.text = pet.short_description
 
                 view.setOnClickListener {
-                    navigationManager.navigateToPetProfileActivity(context, pet, false)
+                    listener.onPetClicked(pet)
                 }
             }
 
@@ -104,7 +104,7 @@ class FavoritePetsFragment : BaseFragment() {
             val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.pet_favorite_cell, parent, false)
 
-            return MyViewHolder(context, navigationManager, view)
+            return MyViewHolder(context, listener, view)
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -119,6 +119,11 @@ class FavoritePetsFragment : BaseFragment() {
         @JvmStatic
         fun newInstance() = FavoritePetsFragment()
     }
+
+
 }
 
 
+interface PetClickedListener {
+    fun onPetClicked(pet: Pet)
+}

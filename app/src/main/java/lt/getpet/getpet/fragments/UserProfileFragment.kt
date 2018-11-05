@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import lt.getpet.getpet.R
+import lt.getpet.getpet.authentication.AuthStateChangedListener
 import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.data.RegularUser
 import lt.getpet.getpet.navigation.NavigationManager
 import javax.inject.Inject
 
-class UserProfileFragment : BaseFragment() {
+class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
 
     @Inject
     lateinit var authenticationManager: AuthenticationManager
@@ -29,6 +31,8 @@ class UserProfileFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
 
+        authenticationManager.addAuthStateChangeListener(this)
+
         val user = authenticationManager.getCurrentUser()
         when (user) {
             is RegularUser -> showUserProfile(user)
@@ -38,6 +42,11 @@ class UserProfileFragment : BaseFragment() {
         button_login.setOnClickListener {
             navigationManager.navigateToUserLoginActivity(activity!!)
         }
+    }
+
+    override fun onStop() {
+        authenticationManager.removeAuthStateChangeListener(this)
+        super.onStop()
     }
 
     private fun showAnonymousProfile() {
@@ -57,6 +66,14 @@ class UserProfileFragment : BaseFragment() {
                     .apply(RequestOptions.circleCropTransform())
                     .into(user_photo)
         }
+    }
+
+    override fun onRegularUserLoggedIn(regularUser: RegularUser) {
+        showUserProfile(regularUser)
+    }
+
+    override fun onAuthError(throwable: Throwable) {
+        Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_LONG).show()
     }
 
     companion object {

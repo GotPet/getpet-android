@@ -10,9 +10,9 @@
     app:cardUseCompatPadding="true">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_favourites_heart" />
+        app:srcCompat="@drawable/heart_outline" />
 
 </androidx.cardview.widget.CardView>

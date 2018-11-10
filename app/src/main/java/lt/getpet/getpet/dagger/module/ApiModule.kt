@@ -5,12 +5,15 @@ import dagger.Provides
 import io.reactivex.Scheduler
 import lt.getpet.getpet.BuildConfig
 import lt.getpet.getpet.dagger.IoScheduler
+import lt.getpet.getpet.network.ApiHeadersInterceptor
+import lt.getpet.getpet.network.FirebaseTokenRefresherInterceptor
 import lt.getpet.getpet.network.PetApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -24,24 +27,34 @@ class ApiModule {
 
     @Provides
     @Singleton
+    fun provideOkHttpClient(
+            apiHeadersInterceptor: ApiHeadersInterceptor,
+            firebaseTokenRefresherInterceptor: FirebaseTokenRefresherInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+                .addInterceptor(firebaseTokenRefresherInterceptor)
+                .addInterceptor(apiHeadersInterceptor)
+                .apply {
+                    if (BuildConfig.DEBUG) {
+                        addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+                    }
+                }
+                .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideApi2Retrofit(
             @IoScheduler ioScheduler: Scheduler,
-            moshi: MoshiConverterFactory
+            moshi: MoshiConverterFactory,
+            okHttpClient: OkHttpClient
     ): Retrofit {
-        val clientBuilder = OkHttpClient.Builder()
-
-        if (BuildConfig.DEBUG) {
-            val interceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BASIC
-            }
-            clientBuilder.addInterceptor(interceptor)
-        }
 
         return Retrofit.Builder()
                 .addConverterFactory(moshi)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(ioScheduler))
                 .baseUrl("https://www.getpet.lt/")
-                .client(clientBuilder.build())
+                .client(okHttpClient)
                 .build()
 
     }
@@ -52,3 +65,7 @@ class ApiModule {
         return retrofit.create(PetApiService::class.java)
     }
 }
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class RawOkHttpClient

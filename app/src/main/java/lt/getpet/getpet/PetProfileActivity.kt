@@ -33,7 +33,7 @@ class PetProfileActivity : BaseActivity() {
         toolbar_layout.title = pet.name
 
         pet_description.text = pet.description
-        pet_short_description.text = pet.short_description
+        pet_short_description.text = pet.shortDescription
 
 
         button_get_pet.setOnClickListener {

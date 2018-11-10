@@ -89,7 +89,7 @@ class FavoritePetsFragment : BaseFragment(), PetClickedListener {
                         .into(view.pet_photo)
 
                 view.pet_name.text = pet.name
-                view.pet_short_description.text = pet.short_description
+                view.pet_short_description.text = pet.shortDescription
 
                 view.setOnClickListener {
                     listener.onPetClicked(pet)

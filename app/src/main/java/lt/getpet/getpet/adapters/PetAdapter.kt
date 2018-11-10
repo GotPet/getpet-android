@@ -19,7 +19,7 @@ class PetAdapter(context: Context) : ArrayAdapter<Pet>(context, 0) {
 
         val pet = getItem(position)!!
         view.pet_name.text = pet.name
-        view.pet_short_description.text = pet.short_description
+        view.pet_short_description.text = pet.shortDescription
         Glide.with(context).load(pet.photo).into(view.pet_image)
 
         return view

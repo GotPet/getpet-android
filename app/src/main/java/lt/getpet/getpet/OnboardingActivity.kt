@@ -19,7 +19,9 @@ class OnboardingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        onboarding_viewpager.adapter = OnboardingAdapter(this, supportFragmentManager)
+        val adapter = OnboardingAdapter(this, supportFragmentManager)
+
+        onboarding_viewpager.adapter = adapter
 
         indicator.setViewPager(onboarding_viewpager)
 
@@ -28,7 +30,7 @@ class OnboardingActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-               if(position == 4) button_next.setText(getString(R.string.button_end_onboarding))
+               if(position == adapter.count - 1) button_next.setText(getString(R.string.button_end_onboarding))
                 else button_next.setText(getString(R.string.button_next))
             }
 
@@ -37,7 +39,7 @@ class OnboardingActivity : BaseActivity() {
         })
 
         button_next.setOnClickListener {
-            if (onboarding_viewpager.currentItem == 4){
+            if (onboarding_viewpager.currentItem == adapter.count - 1){
             // User has seen OnboardingFragment, so mark our SharedPreferences
             // flag as completed so that we don't show our OnboardingFragment
             // the next time the user launches the app.

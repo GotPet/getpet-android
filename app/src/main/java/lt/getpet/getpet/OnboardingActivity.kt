@@ -19,9 +19,7 @@ class OnboardingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        val adapter = OnboardingAdapter(this, supportFragmentManager)
-
-        onboarding_viewpager.adapter = adapter
+        onboarding_viewpager.adapter = OnboardingAdapter(this, supportFragmentManager)
 
         indicator.setViewPager(onboarding_viewpager)
 

@@ -1,8 +1,11 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.widget.Toast
 import io.reactivex.Single
+import lt.getpet.getpet.constants.ActivityConstants.Companion.COMPLETED_ONBOARDING_PREF_NAME
+import lt.getpet.getpet.fragments.OnBoardingFragment
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
@@ -42,7 +45,7 @@ class SplashActivity : BaseActivity() {
                         }
                         .observeOn(uiScheduler)
                         .subscribe({
-                            showMainActivity()
+                            showOnBoardingFragment()
                         }, { t ->
                             Timber.w(t)
                             Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
@@ -53,5 +56,15 @@ class SplashActivity : BaseActivity() {
     private fun showMainActivity() {
         navigationManager.navigateToMainActivity(this)
         finish()
+    }
+
+    private fun showOnBoardingFragment() {
+        PreferenceManager.getDefaultSharedPreferences(this).apply {
+            // Check if we need to display our OnboardingFragment
+            if (!getBoolean(COMPLETED_ONBOARDING_PREF_NAME, false)) {
+                // The user hasn't seen the OnboardingFragment yet, so show it
+                navigationManager.navigateToOnboardingActivity(this@SplashActivity)
+            } else showMainActivity()
+        }
     }
 }

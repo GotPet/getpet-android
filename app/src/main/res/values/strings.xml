@@ -14,10 +14,24 @@
 
     <string name="anonymous_user_name">Anonimas</string>
 
+    <!--Onboarding STRINGS-->
+    <string name="onboarding_1_heading">Labas!</string>
+    <string name="onboarding_1_text">Atrodo nori būti mūsų draugu,\nsusipažink su programėle!</string>
+    <string name="onboarding_2_heading">Jei susižavėjai,</string>
+    <string name="onboarding_2_text">nuslink patikusio gyvūno\nnuotrauką dešinėn - taip pridėsi\nją į mėgiamiausių sąrašą.</string>
+    <string name="onboarding_3_heading">Deja, ne šį kartą?</string>
+    <string name="onboarding_3_text">Jei nesusižavėjai - praleisk\nnuslink nuotrauką kairėn.</string>
+    <string name="onboarding_4_heading">Susipažinkim!</string>
+    <string name="onboarding_4_text">Paspausk ant gyvūno nuotraukos\nir perskaityk jo istoriją.</string>
+    <string name="onboarding_5_heading">Priglausk!</string>
+    <string name="onboarding_5_text">Paspausk "Get Pet" ir sužinok,\nkur rasi savo draugą.</string>
 
     <!--BUTTON STRINGS-->
     <string name="button_login_with_google">Prisijunk su Google</string>
     <string name="button_login_with_facebook">Prisijunk su Facebook</string>
     <string name="button_login">Prisijungti</string>
     <string name="button_get_pet">Noriu priglausti</string>
+    <string name="button_next">Kitas</string>
+    <string name="button_skip">Praleisti</string>
+    <string name="button_end_onboarding">Pabaigti</string>
 </resources>

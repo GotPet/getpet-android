@@ -45,7 +45,13 @@ class SplashActivity : BaseActivity() {
                         }
                         .observeOn(uiScheduler)
                         .subscribe({
-                            showOnBoardingFragment()
+                            PreferenceManager.getDefaultSharedPreferences(this).apply {
+                                // Check if we need to display our OnboardingFragment
+                                if (!getBoolean(COMPLETED_ONBOARDING_PREF_NAME, false)) {
+                                    // The user hasn't seen the OnboardingFragment yet, so show it
+                                    showOnBoardingActivity()
+                                } else showMainActivity()
+                            }
                         }, { t ->
                             Timber.w(t)
                             Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
@@ -58,13 +64,7 @@ class SplashActivity : BaseActivity() {
         finish()
     }
 
-    private fun showOnBoardingFragment() {
-        PreferenceManager.getDefaultSharedPreferences(this).apply {
-            // Check if we need to display our OnboardingFragment
-            if (!getBoolean(COMPLETED_ONBOARDING_PREF_NAME, false)) {
-                // The user hasn't seen the OnboardingFragment yet, so show it
-                navigationManager.navigateToOnboardingActivity(this@SplashActivity)
-            } else showMainActivity()
-        }
+    private fun showOnBoardingActivity() {
+        navigationManager.navigateToOnboardingActivity(this@SplashActivity)
     }
 }

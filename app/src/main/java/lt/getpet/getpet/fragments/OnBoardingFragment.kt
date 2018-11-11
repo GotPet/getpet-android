@@ -7,8 +7,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_onboarding.view.*
 import lt.getpet.getpet.R
-import lt.getpet.getpet.constants.ActivityConstants.Companion.POSITION
-import java.lang.IndexOutOfBoundsException
 
 
 /**
@@ -21,8 +19,10 @@ class OnBoardingFragment : BaseFragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_onboarding, container, false)
 
-        val position = getArguments()!!.getInt(POSITION)
-        when (position){
+        val position = arguments?.getInt(ONBOARDING_FRAGMENT_POSITION)
+                ?: throw IllegalArgumentException("Pass position to onboarding fragment")
+
+        when (position) {
             0 -> {
                 rootView.onboarding_image.setImageResource(R.drawable.onboarding_one)
                 rootView.onboarding_text_heading.setText(R.string.onboarding_1_heading)
@@ -54,11 +54,27 @@ class OnBoardingFragment : BaseFragment() {
                 rootView.onboarding_text_main.setText(R.string.onboarding_5_text)
             }
 
-            else -> {val indexOutOfBoundsException = IndexOutOfBoundsException()
+            else -> {
+                val indexOutOfBoundsException = IndexOutOfBoundsException()
                 throw indexOutOfBoundsException
             }
         }
 
         return rootView
+    }
+
+    companion object {
+        private const val ONBOARDING_FRAGMENT_POSITION = "position"
+
+        @JvmStatic
+        fun newInstance(position: Int): OnBoardingFragment {
+            val bundle = Bundle().apply {
+                putInt(ONBOARDING_FRAGMENT_POSITION, position)
+            }
+
+            return OnBoardingFragment().apply {
+                arguments = bundle
+            }
+        }
     }
 }

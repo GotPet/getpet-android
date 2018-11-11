@@ -1,13 +1,11 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import lt.getpet.getpet.adapters.OnboardingAdapter
 import lt.getpet.getpet.navigation.NavigationManager
 import javax.inject.Inject
 import androidx.viewpager.widget.ViewPager
-import lt.getpet.getpet.constants.ActivityConstants
 import lt.getpet.getpet.preferences.AppPreferences
 
 
@@ -23,7 +21,7 @@ class OnboardingActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        val adapter = OnboardingAdapter(this, supportFragmentManager)
+        val adapter = OnboardingAdapter(supportFragmentManager)
 
         onboarding_viewpager.adapter = adapter
 

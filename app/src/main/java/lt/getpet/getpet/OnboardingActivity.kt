@@ -32,8 +32,12 @@ class OnboardingActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (position == adapter.count - 1) button_next.setText(getString(R.string.button_end_onboarding))
-                else button_next.setText(getString(R.string.button_next))
+                if (position == adapter.count - 1) {
+                    button_next.setText(R.string.button_end_onboarding)
+                }
+                else {
+                    button_next.setText(R.string.button_next)
+                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -48,7 +52,9 @@ class OnboardingActivity : BaseActivity() {
                 appPreferences.onboardingShown.set(true)
                 // End on boarding, go to main activity
                 showMainActivity()
-            } else onboarding_viewpager.setCurrentItem(onboarding_viewpager.currentItem + 1, true)
+            } else {
+                onboarding_viewpager.setCurrentItem(onboarding_viewpager.currentItem + 1, true)
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package lt.getpet.getpet.dagger.module
 
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -32,5 +33,11 @@ class AppModule {
     @DbScheduler
     fun provideDbScheduler(): Scheduler {
         return Schedulers.single()
+    }
+
+    @Provides
+    @Singleton
+    fun providesMoshi(): Moshi {
+        return Moshi.Builder().build()
     }
 }

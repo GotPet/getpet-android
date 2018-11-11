@@ -9,6 +9,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GetTokenResult
 import io.reactivex.Single
 import lt.getpet.getpet.R
 import lt.getpet.getpet.data.GuestUser
@@ -43,6 +44,23 @@ class AuthenticationManager {
         val user = getCurrentUser()
 
         return user != null && user is RegularUser
+    }
+
+    fun getFirebaseAPIToken(): Single<FirebaseAPIToken> {
+        return Single.create { subscriber ->
+            firebaseAuth.getAccessToken(false).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (!subscriber.isDisposed) {
+                        val firebaseAPIToken = task.result!!.mapToFirebaseAPIToken()
+                        subscriber.onSuccess(firebaseAPIToken)
+                    }
+                } else {
+                    if (!subscriber.isDisposed) {
+                        subscriber.onError(task.exception!!)
+                    }
+                }
+            }
+        }
     }
 
     fun signInAnonymously(activity: Activity): Single<GuestUser> {
@@ -141,6 +159,12 @@ class AuthenticationManager {
                 email = this.email!!,
                 photo_url = this.photoUrl?.toString(),
                 provider = Provider.GOOGLE
+        )
+    }
+
+    private fun GetTokenResult.mapToFirebaseAPIToken(): FirebaseAPIToken {
+        return FirebaseAPIToken(
+                token = this.token!!
         )
     }
 

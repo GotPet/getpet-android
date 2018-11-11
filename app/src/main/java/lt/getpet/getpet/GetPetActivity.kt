@@ -21,7 +21,7 @@ class GetPetActivity : BaseActivity() {
                 .into(get_pet_image)
 
         get_pet_name.text = pet.name
-        get_pet_short_description.text = pet.short_description
+        get_pet_short_description.text = pet.shortDescription
 
 
         shelter_name.text = pet.shelter.name

@@ -30,14 +30,13 @@ class OnBoardingFragment : BaseFragment() {
             }
 
             1 -> {
-                rootView.toolbar.visibility = VISIBLE
                 rootView.onboarding_image.setImageResource(R.drawable.onboarding_two)
                 rootView.onboarding_text_heading.setText(R.string.onboarding_2_heading)
                 rootView.onboarding_text_main.setText(R.string.onboarding_2_text)
             }
 
             2 -> {
-                rootView.onboarding_image.setImageResource(R.drawable.onboarding_tree)
+                rootView.onboarding_image.setImageResource(R.drawable.onboarding_three)
                 rootView.onboarding_text_heading.setText(R.string.onboarding_3_heading)
                 rootView.onboarding_text_main.setText(R.string.onboarding_3_text)
             }

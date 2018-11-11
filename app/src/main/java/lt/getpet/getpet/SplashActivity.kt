@@ -6,6 +6,7 @@ import io.reactivex.Single
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
+import lt.getpet.getpet.preferences.AppPreferences
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,6 +21,9 @@ class SplashActivity : BaseActivity() {
 
     @Inject
     lateinit var navigationManager: NavigationManager
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +46,11 @@ class SplashActivity : BaseActivity() {
                         }
                         .observeOn(uiScheduler)
                         .subscribe({
-                            showMainActivity()
+                            if (!appPreferences.onboardingShown.get()) {
+                                showOnBoardingActivity()
+                            } else {
+                                showMainActivity()
+                            }
                         }, { t ->
                             Timber.w(t)
                             Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
@@ -52,6 +60,11 @@ class SplashActivity : BaseActivity() {
 
     private fun showMainActivity() {
         navigationManager.navigateToMainActivity(this)
+        finish()
+    }
+
+    private fun showOnBoardingActivity() {
+        navigationManager.navigateToOnboardingActivity(this@SplashActivity)
         finish()
     }
 }

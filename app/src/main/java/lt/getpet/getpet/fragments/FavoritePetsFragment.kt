@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -72,6 +74,8 @@ class FavoritePetsFragment : BaseFragment(), PetClickedListener {
     private fun showPets(pets: List<Pet>) {
         petsAdapter.pets = pets
         petsAdapter.notifyDataSetChanged()
+        if (petsAdapter.itemCount == 0){no_content.visibility = VISIBLE}
+        else no_content.visibility = GONE
     }
 
     class PetsAdapter(val context: Context, private val listener: PetClickedListener, var pets: List<Pet>) :

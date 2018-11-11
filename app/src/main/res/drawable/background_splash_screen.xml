@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
     <item android:drawable="@color/colorPrimary" />
     <item>
-        <bitmap android:src="@drawable/splash_screen_get_pet"
+        <bitmap android:src="@drawable/get_pet_logo"
             android:gravity="center"
             android:scaleType="centerInside"/>
     </item>

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import lt.getpet.getpet.GetPetActivity
 import lt.getpet.getpet.MainActivity
+import lt.getpet.getpet.OnboardingActivity
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
@@ -18,6 +19,12 @@ class NavigationManager(private val authenticationManager: AuthenticationManager
         val intent = Intent(activity, MainActivity::class.java)
 
         activity.startActivityForResult(intent, RC_SIGN_IN)
+    }
+
+    fun navigateToOnboardingActivity(activity: Activity){
+        val intent = Intent(activity, OnboardingActivity::class.java)
+
+        activity.startActivity(intent)
     }
 
     fun navigateToUserLoginActivity(activity: Activity) {

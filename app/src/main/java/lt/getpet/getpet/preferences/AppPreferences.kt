@@ -3,6 +3,7 @@ package lt.getpet.getpet.preferences
 import android.content.SharedPreferences
 import com.squareup.moshi.Moshi
 import com.vinted.preferx.PreferxSerializer
+import com.vinted.preferx.booleanPreference
 import com.vinted.preferx.objectPreference
 import lt.getpet.getpet.authentication.FirebaseAPIToken
 import java.lang.reflect.Type
@@ -26,9 +27,16 @@ class AppPreferences(private val preferences: SharedPreferences, private val mos
                 FirebaseAPIToken::class.java
         )
     }
+    val onboardingShown by lazy {
+        preferences.booleanPreference(
+                PREFERENCE_ONBOARDING_SHOWN,
+                false
+        )
+    }
 
     companion object {
         private const val PREFERENCE_FIREBASE_API_TOKEN = "FIREBASE_API_TOKEN"
+        private const val PREFERENCE_ONBOARDING_SHOWN = "ONBOARDING_SHOWN"
     }
 
 

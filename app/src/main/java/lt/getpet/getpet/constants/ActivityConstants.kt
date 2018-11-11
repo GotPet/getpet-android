@@ -8,7 +8,6 @@ class ActivityConstants {
 
         const val EXTRA_PET = "pet"
         const val EXTRA_SHOW_FAVORITE_BUTTON = "SHOW_FAVORITE_BUTTON"
-        const val COMPLETED_ONBOARDING_PREF_NAME = "onboarded"
         const val POSITION = "position"
     }
 }

@@ -1,14 +1,12 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.widget.Toast
 import io.reactivex.Single
-import lt.getpet.getpet.constants.ActivityConstants.Companion.COMPLETED_ONBOARDING_PREF_NAME
-import lt.getpet.getpet.fragments.OnBoardingFragment
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
+import lt.getpet.getpet.preferences.AppPreferences
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,6 +21,9 @@ class SplashActivity : BaseActivity() {
 
     @Inject
     lateinit var navigationManager: NavigationManager
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +46,10 @@ class SplashActivity : BaseActivity() {
                         }
                         .observeOn(uiScheduler)
                         .subscribe({
-                            PreferenceManager.getDefaultSharedPreferences(this).apply {
-                                // Check if we need to display our OnboardingFragment
-                                if (!getBoolean(COMPLETED_ONBOARDING_PREF_NAME, false)) {
-                                    // The user hasn't seen the OnboardingFragment yet, so show it
-                                    showOnBoardingActivity()
-                                } else showMainActivity()
+                            if (!appPreferences.onboardingShown.get()) {
+                                showOnBoardingActivity()
+                            } else {
+                                showMainActivity()
                             }
                         }, { t ->
                             Timber.w(t)

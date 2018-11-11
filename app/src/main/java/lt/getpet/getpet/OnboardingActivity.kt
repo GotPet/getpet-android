@@ -8,12 +8,16 @@ import lt.getpet.getpet.navigation.NavigationManager
 import javax.inject.Inject
 import androidx.viewpager.widget.ViewPager
 import lt.getpet.getpet.constants.ActivityConstants
+import lt.getpet.getpet.preferences.AppPreferences
 
 
 class OnboardingActivity : BaseActivity() {
 
     @Inject
     lateinit var navigationManager: NavigationManager
+
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +34,7 @@ class OnboardingActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-               if(position == adapter.count - 1) button_next.setText(getString(R.string.button_end_onboarding))
+                if (position == adapter.count - 1) button_next.setText(getString(R.string.button_end_onboarding))
                 else button_next.setText(getString(R.string.button_next))
             }
 
@@ -39,16 +43,14 @@ class OnboardingActivity : BaseActivity() {
         })
 
         button_next.setOnClickListener {
-            if (onboarding_viewpager.currentItem == adapter.count - 1){
-            // User has seen OnboardingFragment, so mark our SharedPreferences
-            // flag as completed so that we don't show our OnboardingFragment
-            // the next time the user launches the app.
-                PreferenceManager.getDefaultSharedPreferences(this).edit().apply {
-                    putBoolean(ActivityConstants.COMPLETED_ONBOARDING_PREF_NAME, true)
-                    apply()}
-            // End on boarding, go to main activity
-                showMainActivity()}
-            else onboarding_viewpager.setCurrentItem(onboarding_viewpager.currentItem + 1, true)
+            if (onboarding_viewpager.currentItem == adapter.count - 1) {
+                // User has seen OnboardingFragment, so mark our SharedPreferences
+                // flag as completed so that we don't show our OnboardingFragment
+                // the next time the user launches the app.
+                appPreferences.onboardingShown.set(true)
+                // End on boarding, go to main activity
+                showMainActivity()
+            } else onboarding_viewpager.setCurrentItem(onboarding_viewpager.currentItem + 1, true)
         }
     }
 

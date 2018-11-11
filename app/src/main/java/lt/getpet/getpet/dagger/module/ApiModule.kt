@@ -32,8 +32,8 @@ class ApiModule {
             firebaseTokenRefresherInterceptor: FirebaseTokenRefresherInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(firebaseTokenRefresherInterceptor)
-                .addInterceptor(apiHeadersInterceptor)
+//                .addInterceptor(firebaseTokenRefresherInterceptor)
+//                .addInterceptor(apiHeadersInterceptor)
                 .apply {
                     if (BuildConfig.DEBUG) {
                         addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))

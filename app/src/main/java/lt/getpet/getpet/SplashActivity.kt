@@ -29,42 +29,43 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         subscriptions.add(
-                apiService.getPets()
-                        .subscribeOn(ioScheduler)
-                        .map { pets ->
+                Single.fromCallable {
+                    val user = authenticationManager.getCurrentUser()
+                    if (user == null) {
+                        authenticationManager.signInAnonymously(this)
+                    } else {
+                        Single.just(user)
+                    }
+                }.subscribeOn(ioScheduler)
+                        .flatMap { it }
+                        .flatMap {
+                            apiService.getPets()
+                        }.map { pets ->
                             petsDao.insertPets(pets)
-                        }.flatMap {
-                            val user = authenticationManager.getCurrentUser()
-
-                            if (user == null) {
-                                authenticationManager.signInAnonymously(this)
-                            } else {
-                                Single.just(user)
-                            }
-                        }
-                        .observeOn(uiScheduler)
+                        }.observeOn(uiScheduler)
                         .subscribe({
-                            if (!appPreferences.onboardingShown.get()) {
-                                showOnBoardingActivity()
-                            } else {
-                                showMainActivity()
-                            }
+                            onPetsLoaded()
                         }, { t ->
                             Timber.w(t)
                             Toast.makeText(this, "Error loading pets", Toast.LENGTH_LONG).show()
                         })
         )
+
     }
 
-    private fun showMainActivity() {
-        navigationManager.navigateToMainActivity(this)
+    private fun onPetsLoaded() {
+        if (appPreferences.onboardingShown.get()) {
+            navigationManager.navigateToMainActivity(this)
+        } else {
+            navigationManager.navigateToOnboardingActivity(this)
+        }
         finish()
     }
 
-    private fun showOnBoardingActivity() {
-        navigationManager.navigateToOnboardingActivity(this@SplashActivity)
-        finish()
-    }
 }

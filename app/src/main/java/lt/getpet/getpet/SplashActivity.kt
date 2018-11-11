@@ -65,5 +65,6 @@ class SplashActivity : BaseActivity() {
 
     private fun showOnBoardingActivity() {
         navigationManager.navigateToOnboardingActivity(this@SplashActivity)
+        finish()
     }
 }

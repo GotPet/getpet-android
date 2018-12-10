@@ -178,7 +178,7 @@ class PetSwipeFragment : BaseFragment() {
             override fun onCardClicked(index: Int) {
                 val pet = adapter.getItem(index)!!
 
-                navigationManager.navigateToPetProfileActivity(activity!!, pet, false)
+                navigationManager.navigateToPetProfileActivity(activity!!, pet, true)
             }
         })
     }

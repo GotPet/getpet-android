@@ -58,8 +58,11 @@ class PetProfileActivity : BaseActivity() {
 
         if (intent.getBooleanExtra(EXTRA_SHOW_FAVORITE_BUTTON, false)) {
             fab_favorite_pet.visibility = View.VISIBLE
+            button_get_pet.visibility = View.GONE
         } else {
             fab_favorite_pet.visibility = View.GONE
+            button_get_pet.visibility = View.VISIBLE
+
         }
     }
 }

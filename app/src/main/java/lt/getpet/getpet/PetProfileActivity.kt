@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_pet_profile.*
+import lt.getpet.getpet.adapters.PetPhotosAdapter
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_FAVORITE_BUTTON
 import lt.getpet.getpet.data.Pet
@@ -28,7 +28,14 @@ class PetProfileActivity : BaseActivity() {
         }
 
         val pet = intent.getParcelableExtra<Pet>(EXTRA_PET)
-        Glide.with(this).load(pet.photo).into(pet_image)
+
+
+        val adapter = PetPhotosAdapter(this, pet.allPhotos())
+
+        photos_viewpager.adapter = adapter
+
+        photos_indicator.setViewPager(photos_viewpager)
+
         toolbar.title = pet.name
         toolbar_layout.title = pet.name
 

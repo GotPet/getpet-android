@@ -26,5 +26,12 @@ data class Pet(
         @Json(name = "short_description")
         val shortDescription: String,
         @ColumnInfo(name = "description")
-        val description: String
-) : Parcelable
+        val description: String,
+        @ColumnInfo(name = "photos")
+        @Json(name = "profile_photos")
+        val photos: List<PetPhoto> = emptyList()
+) : Parcelable {
+    fun allPhotos(): List<String> {
+        return listOf(photo) + photos.map { it.photo }
+    }
+}

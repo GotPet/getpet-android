@@ -27,7 +27,8 @@
             android:gravity="center_horizontal"
             android:text="@string/empty_favorites_list"
             android:textColor="@color/colorTextLighter"
-            android:textSize="24sp" />
+            android:textSize="22sp"
+            android:layout_margin="16dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

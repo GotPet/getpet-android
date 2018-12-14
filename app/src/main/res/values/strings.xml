@@ -25,7 +25,7 @@
     <string name="onboarding_4_heading">Susipažinkim!</string>
     <string name="onboarding_4_text">Paspausk ant gyvūno nuotraukos\nir perskaityk jo istoriją.</string>
     <string name="onboarding_5_heading">Priglausk!</string>
-    <string name="onboarding_5_text">Paspausk "GetPet" ir sužinok,\nkur rasi savo draugą.</string>
+    <string name="onboarding_5_text">Paspausk „GetPet“ ir sužinok,\nkur rasi savo draugą.</string>
 
     <!--BUTTON STRINGS-->
     <string name="button_login_with_google">Prisijunk su Google</string>

@@ -63,7 +63,7 @@ class FavoritePetsFragment : BaseFragment(), PetClickedListener {
     }
 
     override fun onPetClicked(pet: Pet) {
-        navigationManager.navigateToPetProfileActivity(activity!!, pet, false)
+        navigationManager.navigateToPetProfileActivity(this, pet, false)
     }
 
     override fun onDetach() {

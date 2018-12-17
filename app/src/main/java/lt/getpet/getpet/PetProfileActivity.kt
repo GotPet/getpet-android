@@ -1,7 +1,6 @@
 package lt.getpet.getpet
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_pet_profile.*
@@ -52,7 +51,7 @@ class PetProfileActivity : BaseActivity() {
         }
 
         fab_favorite_pet.setOnClickListener {
-            setResult(RESULT_OK, Intent())
+            setResult(RESULT_OK)
             finish()
         }
 

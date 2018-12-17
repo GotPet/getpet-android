@@ -2,6 +2,7 @@ package lt.getpet.getpet.navigation
 
 import android.app.Activity
 import android.content.Intent
+import androidx.fragment.app.Fragment
 import lt.getpet.getpet.GetPetActivity
 import lt.getpet.getpet.MainActivity
 import lt.getpet.getpet.OnboardingActivity
@@ -40,11 +41,11 @@ class NavigationManager(private val authenticationManager: AuthenticationManager
         activity.startActivity(intent)
     }
 
-    fun navigateToPetProfileActivity(activity: Activity, pet: Pet, showFavoriteButton: Boolean) {
-        val intent = Intent(activity, PetProfileActivity::class.java).apply {
+    fun navigateToPetProfileActivity(fragment: Fragment, pet: Pet, showFavoriteButton: Boolean) {
+        val intent = Intent(fragment.context, PetProfileActivity::class.java).apply {
             putExtra(EXTRA_PET, pet)
             putExtra(EXTRA_SHOW_FAVORITE_BUTTON, showFavoriteButton)
         }
-        activity.startActivityForResult(intent, PET_FAVORITE)
+        fragment.startActivityForResult(intent, PET_FAVORITE)
     }
 }

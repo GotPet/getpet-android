@@ -10,11 +10,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.fragments.FavoritePetsFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
+import lt.getpet.getpet.network.PetApiService
+import lt.getpet.getpet.persistence.PetDao
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity() {
+    @Inject
+    lateinit var apiService: PetApiService
 
+    @Inject
+    lateinit var petsDao: PetDao
 
     private val tabsPagerAdapter: TabsPagerAdapter by lazy { TabsPagerAdapter(supportFragmentManager) }
 
@@ -27,6 +34,10 @@ class MainActivity : BaseActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(view_pager))
         view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         view_pager.currentItem = 1
+
+        if (savedInstanceState == null) {
+            updatePets()
+        }
     }
 
     override fun onStart() {
@@ -51,6 +62,23 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    // TODO follow pagination for getPets
+    private fun updatePets() {
+        val disposable = petsDao.getLikedPetIds()
+                .subscribeOn(ioScheduler)
+                .flatMap {
+                    apiService.getPets(it)
+                }.map { petsResponse ->
+                    petsDao.updatePets(petsResponse.results)
+                }.observeOn(uiScheduler)
+                .subscribe({
+                    Timber.d("Pets in DB has been updated")
+                }, { t ->
+                    Timber.w(t)
+                })
+
+        subscriptions.add(disposable)
+    }
 
     inner class TabsPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 

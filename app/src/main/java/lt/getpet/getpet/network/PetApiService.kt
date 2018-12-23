@@ -7,6 +7,7 @@ import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface PetApiService {
 
@@ -15,7 +16,7 @@ interface PetApiService {
 
 
     @GET("api/v1/pets/")
-    fun getPets(): Single<List<Pet>>
+    fun getPets(@Query("pet_ids") petIds: List<Long>, page: Int = 1): Single<PetResponse>
 
     @POST("api/v1/pets/generate/")
     fun generatePets(@Body generatePetsRequest: GeneratePetsRequest): Single<List<Pet>>
@@ -27,6 +28,5 @@ interface PetApiService {
 
     @POST("api/v1/pets/pet/shelter/")
     fun shelterPet(@Body shelterPetRequest: ShelterPetRequest): Observable<ResponseBody>
-
 
 }

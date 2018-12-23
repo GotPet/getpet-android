@@ -1,9 +1,6 @@
 package lt.getpet.getpet.persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.reactivex.Flowable
 import io.reactivex.Single
 import lt.getpet.getpet.data.Pet
@@ -29,6 +26,9 @@ interface PetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPets(pets: List<Pet>): List<Long>
+
+    @Update
+    fun updatePets(pets: List<Pet>): Int
 
 
 }

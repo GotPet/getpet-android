@@ -35,7 +35,7 @@ class ApiHeadersInterceptor @Inject constructor(
         requestBuilder.addHeader(HTTP_HEADER_AUTHORIZATION, formatTokenForHeader(apiToken.token))
     }
 
-    private fun formatTokenForHeader(token: String) = "Bearer $token"
+    private fun formatTokenForHeader(token: String) = "Token $token"
 
     companion object {
         const val HTTP_HEADER_AUTHORIZATION = "Authorization"

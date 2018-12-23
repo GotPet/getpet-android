@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.google.android.material.tabs.TabLayout
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
+import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.fragments.FavoritePetsFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
@@ -66,8 +68,12 @@ class MainActivity : BaseActivity() {
     private fun updatePets() {
         val disposable = petsDao.getLikedPetIds()
                 .subscribeOn(ioScheduler)
-                .flatMap {
-                    apiService.getPets(it)
+                .flatMap { petIds ->
+                    if (petIds.isNotEmpty()) {
+                        apiService.getPets(petIds)
+                    } else {
+                        Single.just(PetResponse(results = emptyList()))
+                    }
                 }.map { petsResponse ->
                     petsDao.updatePets(petsResponse.results)
                 }.observeOn(uiScheduler)

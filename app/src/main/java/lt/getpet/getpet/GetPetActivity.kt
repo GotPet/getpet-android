@@ -6,8 +6,16 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.data.ShelterPetRequest
+import lt.getpet.getpet.network.PetApiService
+import timber.log.Timber
+import javax.inject.Inject
 
 class GetPetActivity : BaseActivity() {
+
+    @Inject
+    lateinit var petApiService: PetApiService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,5 +35,16 @@ class GetPetActivity : BaseActivity() {
         shelter_name.text = pet.shelter.name
         shelter_email.text = pet.shelter.email
         shelter_phone.text = pet.shelter.phone
+
+        val apiDisposable = petApiService.shelterPet(ShelterPetRequest(petId = pet.id))
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe({
+                    Timber.d("Saved shelter pet request ${pet.id} to API")
+                }, {
+                    Timber.w(it)
+                })
+
+        subscriptions.add(apiDisposable)
     }
 }

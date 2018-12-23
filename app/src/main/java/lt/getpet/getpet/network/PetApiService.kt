@@ -21,8 +21,12 @@ interface PetApiService {
     fun generatePets(@Body generatePetsRequest: GeneratePetsRequest): Single<List<Pet>>
 
 
-    @POST("api/v1/pets/choice/")
+    @POST("api/v1/pets/pet/choice/")
     fun savePetChoice(@Body petChoiceRequest: PetChoiceRequest): Observable<ResponseBody>
+
+
+    @POST("api/v1/pets/pet/shelter/")
+    fun shelterPet(@Body shelterPetRequest: ShelterPetRequest): Observable<ResponseBody>
 
 
 }

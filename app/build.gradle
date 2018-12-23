@@ -114,10 +114,8 @@ dependencies {
     //Swipelayout
     implementation 'com.yuyakaido.android:card-stack-view:1.0.0-beta9'
 
-    //Glide for images
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
 
     //Circle indicator for slider
     implementation 'me.relex:circleindicator:1.2.2@aar'

@@ -32,7 +32,7 @@ class ApiModule {
                 .addInterceptor(apiHeadersInterceptor)
                 .apply {
                     if (BuildConfig.DEBUG) {
-                        addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                        addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                     }
                 }
                 .build()

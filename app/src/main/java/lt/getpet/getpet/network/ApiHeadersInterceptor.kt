@@ -23,16 +23,16 @@ class ApiHeadersInterceptor @Inject constructor(
     private fun appendToken(chain: Interceptor.Chain, requestBuilder: Request.Builder) {
         val containsTokenHeader = chain.request().headers().names().contains(HTTP_HEADER_AUTHORIZATION)
 
-        if (!containsTokenHeader && appPreferences.firebaseApiToken.isSet()) {
+        if (!containsTokenHeader && appPreferences.apiToken.isSet()) {
             applyToken(requestBuilder)
         }
     }
 
 
     fun applyToken(requestBuilder: Request.Builder) {
-        val firebaseToken = appPreferences.firebaseApiToken.get()
+        val apiToken = appPreferences.apiToken.get()
 
-        requestBuilder.addHeader(HTTP_HEADER_AUTHORIZATION, formatTokenForHeader(firebaseToken.token))
+        requestBuilder.addHeader(HTTP_HEADER_AUTHORIZATION, formatTokenForHeader(apiToken.token))
     }
 
     private fun formatTokenForHeader(token: String) = "Bearer $token"

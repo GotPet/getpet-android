@@ -1,6 +1,7 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -9,9 +10,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import lt.getpet.getpet.fragments.FavoritePetsFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
+import timber.log.Timber
 
 
 class MainActivity : BaseActivity() {
+
 
     private val tabsPagerAdapter: TabsPagerAdapter by lazy { TabsPagerAdapter(supportFragmentManager) }
 
@@ -24,6 +27,28 @@ class MainActivity : BaseActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(view_pager))
         view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         view_pager.currentItem = 1
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        retrieveApiTokenIfNeeded()
+    }
+
+    private fun retrieveApiTokenIfNeeded() {
+        if (authenticationManager.isUserLoggedIn() && !authenticationManager.isApiTokenSet()) {
+            val disposable = authenticationManager.refreshAndGetApiToken()
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .subscribe({
+                        Timber.i("Api token retrieved")
+                    }, {
+                        Timber.w(it)
+                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
+                    })
+
+            subscriptions.add(disposable)
+        }
     }
 
 

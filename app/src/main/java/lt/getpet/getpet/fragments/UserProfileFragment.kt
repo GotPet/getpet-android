@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.authentication.AuthStateChangedListener
@@ -22,6 +23,9 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
 
     @Inject
     lateinit var navigationManager: NavigationManager
+
+
+    private var subscriptions: CompositeDisposable = CompositeDisposable()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -69,11 +73,25 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
     }
 
     override fun onUserLoggedIn(user: User) {
-        showUserProfile(user)
+        val disposable = authenticationManager.refreshAndGetApiToken()
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe({
+                    showUserProfile(user)
+                }, {
+                    Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
+                })
+
+        subscriptions.add(disposable)
     }
 
     override fun onAuthError(throwable: Throwable) {
         Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        subscriptions.clear()
     }
 
     companion object {

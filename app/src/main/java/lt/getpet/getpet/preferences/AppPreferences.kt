@@ -5,7 +5,7 @@ import com.squareup.moshi.Moshi
 import com.vinted.preferx.PreferxSerializer
 import com.vinted.preferx.booleanPreference
 import com.vinted.preferx.objectPreference
-import lt.getpet.getpet.authentication.FirebaseAPIToken
+import lt.getpet.getpet.authentication.ApiToken
 import java.lang.reflect.Type
 
 class AppPreferences(private val preferences: SharedPreferences, private val moshi: Moshi) {
@@ -19,12 +19,12 @@ class AppPreferences(private val preferences: SharedPreferences, private val mos
         }
     }
 
-    val firebaseApiToken by lazy {
+    val apiToken by lazy {
         preferences.objectPreference(
-                PREFERENCE_FIREBASE_API_TOKEN,
-                FirebaseAPIToken(token = "123"),
+                PREFERENCE_API_TOKEN,
+                ApiToken(token = ""),
                 MoshiPreferencesSerializer(moshi),
-                FirebaseAPIToken::class.java
+                ApiToken::class.java
         )
     }
     val onboardingShown by lazy {
@@ -35,7 +35,7 @@ class AppPreferences(private val preferences: SharedPreferences, private val mos
     }
 
     companion object {
-        private const val PREFERENCE_FIREBASE_API_TOKEN = "FIREBASE_API_TOKEN"
+        private const val PREFERENCE_API_TOKEN = "API_TOKEN"
         private const val PREFERENCE_ONBOARDING_SHOWN = "ONBOARDING_SHOWN"
     }
 

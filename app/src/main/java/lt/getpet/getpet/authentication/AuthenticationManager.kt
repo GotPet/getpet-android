@@ -8,14 +8,19 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GetTokenResult
 import io.reactivex.Single
 import lt.getpet.getpet.R
+import lt.getpet.getpet.data.AuthenticationRequest
 import lt.getpet.getpet.data.Provider
 import lt.getpet.getpet.data.User
+import lt.getpet.getpet.network.PetApiService
+import lt.getpet.getpet.preferences.AppPreferences
 import timber.log.Timber
 
-class AuthenticationManager {
+class AuthenticationManager(
+        private val petApiService: PetApiService,
+        private val appPreferences: AppPreferences
+) {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val authStateChangeListeners = mutableListOf<AuthStateChangedListener>()
@@ -43,13 +48,26 @@ class AuthenticationManager {
         return user != null
     }
 
-    fun getFirebaseAPIToken(): Single<FirebaseAPIToken> {
+    fun isApiTokenSet(): Boolean {
+        return appPreferences.apiToken.isSet()
+    }
+
+    fun refreshAndGetApiToken(): Single<ApiToken> {
+        return getFirebaseAPIToken().flatMap { idToken ->
+            petApiService.authenticate(AuthenticationRequest(idToken = idToken))
+        }.map {
+            ApiToken(token = it.key).apply {
+                appPreferences.apiToken.set(this, commit = true)
+            }
+        }
+    }
+
+    private fun getFirebaseAPIToken(): Single<String> {
         return Single.create { subscriber ->
             firebaseAuth.getAccessToken(false).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     if (!subscriber.isDisposed) {
-                        val firebaseAPIToken = task.result!!.mapToFirebaseAPIToken()
-                        subscriber.onSuccess(firebaseAPIToken)
+                        subscriber.onSuccess(task.result!!.token!!)
                     }
                 } else {
                     if (!subscriber.isDisposed) {
@@ -127,12 +145,6 @@ class AuthenticationManager {
         }
 
         return null
-    }
-
-    private fun GetTokenResult.mapToFirebaseAPIToken(): FirebaseAPIToken {
-        return FirebaseAPIToken(
-                token = this.token!!
-        )
     }
 
 }

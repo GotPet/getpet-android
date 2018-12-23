@@ -17,10 +17,13 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_swipe.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.adapters.PetAdapter
+import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.constants.ActivityConstants.Companion.PET_FAVORITE
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.data.PetChoice
+import lt.getpet.getpet.data.PetChoiceRequest
 import lt.getpet.getpet.navigation.NavigationManager
+import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,6 +36,12 @@ class PetSwipeFragment : BaseFragment() {
 
     @Inject
     lateinit var navigationManager: NavigationManager
+
+    @Inject
+    lateinit var petApiService: PetApiService
+
+    @Inject
+    lateinit var authenticationManager: AuthenticationManager
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
     lateinit var adapter: PetAdapter
@@ -131,10 +140,9 @@ class PetSwipeFragment : BaseFragment() {
     fun savePetChoice(pet: Pet, isFavorite: Boolean) {
         val petChoice = PetChoice(petId = pet.id, isFavorite = isFavorite)
 
-        val disposable = Single.fromCallable {
+        val dbDisposable = Single.fromCallable {
             petsDao.insertPetChoice(petChoice)
-        }
-                .subscribeOn(dbScheduler)
+        }.subscribeOn(dbScheduler)
                 .observeOn(uiScheduler)
                 .subscribe({
                     Timber.d("Saved pet choice: $petChoice")
@@ -142,7 +150,22 @@ class PetSwipeFragment : BaseFragment() {
                     Timber.w(it)
                     Toast.makeText(context, "Error saving pet", Toast.LENGTH_SHORT).show()
                 })
-        subscriptions.add(disposable)
+
+        subscriptions.add(dbDisposable)
+
+        if (authenticationManager.isUserLoggedIn()) {
+            val petChoiceRequest = PetChoiceRequest(petId = pet.id, favorite = isFavorite)
+            val apiDisposable = petApiService.savePetChoice(petChoiceRequest)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .subscribe({
+                        Timber.d("Saved pet ${pet.id} choice to API")
+                    }, {
+                        Timber.w(it)
+                    })
+
+            subscriptions.add(apiDisposable)
+        }
     }
 
 

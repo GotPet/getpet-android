@@ -1,6 +1,5 @@
 package lt.getpet.getpet.authentication
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
@@ -12,9 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GetTokenResult
 import io.reactivex.Single
 import lt.getpet.getpet.R
-import lt.getpet.getpet.data.GuestUser
 import lt.getpet.getpet.data.Provider
-import lt.getpet.getpet.data.RegularUser
 import lt.getpet.getpet.data.User
 import timber.log.Timber
 
@@ -43,7 +40,7 @@ class AuthenticationManager {
     fun isUserLoggedIn(): Boolean {
         val user = getCurrentUser()
 
-        return user != null && user is RegularUser
+        return user != null
     }
 
     fun getFirebaseAPIToken(): Single<FirebaseAPIToken> {
@@ -60,27 +57,6 @@ class AuthenticationManager {
                     }
                 }
             }
-        }
-    }
-
-    fun signInAnonymously(activity: Activity): Single<GuestUser> {
-        return Single.create { subscriber ->
-            firebaseAuth.signInAnonymously()
-                    .addOnCompleteListener(activity) { task ->
-                        if (task.isSuccessful) {
-                            val firebaseUser = task.result!!.user
-                            val user = firebaseUser.mapToGuestUser()
-                            Timber.i("Signed in anonymously $user}")
-
-                            if (!subscriber.isDisposed) {
-                                subscriber.onSuccess(user)
-                            }
-                        } else {
-                            if (!subscriber.isDisposed) {
-                                subscriber.onError(task.exception!!)
-                            }
-                        }
-                    }
         }
     }
 
@@ -115,9 +91,8 @@ class AuthenticationManager {
     }
 
     private fun onUserLoggedIn() {
-        val user = getCurrentUser()
-        if (user is RegularUser) {
-            authStateChangeListeners.forEach { it.onRegularUserLoggedIn(user) }
+        getCurrentUser()?.let { user ->
+            authStateChangeListeners.forEach { it.onUserLoggedIn(user) }
         }
     }
 
@@ -140,26 +115,18 @@ class AuthenticationManager {
         }
     }
 
-    private fun FirebaseUser.mapToUser(): User {
-        if (this.isAnonymous) {
-            return this.mapToGuestUser()
-        }
-        return this.mapToRegularUser()
-
-    }
-
-    private fun FirebaseUser.mapToGuestUser(): GuestUser {
-        return GuestUser(userId = this.uid)
-    }
-
     // TODO map to correct provider
-    private fun FirebaseUser.mapToRegularUser(): RegularUser {
-        return RegularUser(
-                name = this.displayName!!,
-                email = this.email!!,
-                photo_url = this.photoUrl?.toString(),
-                provider = Provider.GOOGLE
-        )
+    private fun FirebaseUser.mapToUser(): User? {
+        if (!this.isAnonymous) {
+            return User(
+                    name = this.displayName!!,
+                    email = this.email!!,
+                    photo_url = this.photoUrl?.toString(),
+                    provider = Provider.GOOGLE
+            )
+        }
+
+        return null
     }
 
     private fun GetTokenResult.mapToFirebaseAPIToken(): FirebaseAPIToken {

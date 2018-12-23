@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_user_profile.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.authentication.AuthStateChangedListener
 import lt.getpet.getpet.authentication.AuthenticationManager
-import lt.getpet.getpet.data.RegularUser
+import lt.getpet.getpet.data.User
 import lt.getpet.getpet.navigation.NavigationManager
 import javax.inject.Inject
 
@@ -35,8 +35,8 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
 
         val user = authenticationManager.getCurrentUser()
         when (user) {
-            is RegularUser -> showUserProfile(user)
-            else -> showAnonymousProfile()
+            null -> showAnonymousProfile()
+            else -> showUserProfile(user)
         }
 
         button_login.setOnClickListener {
@@ -57,7 +57,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
                 .into(user_photo)
     }
 
-    private fun showUserProfile(user: RegularUser) {
+    private fun showUserProfile(user: User) {
         user_name.text = user.name
         button_login.visibility = View.GONE
 
@@ -68,8 +68,8 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         }
     }
 
-    override fun onRegularUserLoggedIn(regularUser: RegularUser) {
-        showUserProfile(regularUser)
+    override fun onUserLoggedIn(user: User) {
+        showUserProfile(user)
     }
 
     override fun onAuthError(throwable: Throwable) {

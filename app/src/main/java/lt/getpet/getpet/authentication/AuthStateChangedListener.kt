@@ -1,10 +1,10 @@
 package lt.getpet.getpet.authentication
 
-import lt.getpet.getpet.data.RegularUser
+import lt.getpet.getpet.data.User
 
 interface AuthStateChangedListener {
 
-    fun onRegularUserLoggedIn(regularUser: RegularUser)
+    fun onUserLoggedIn(user: User)
 
     fun onAuthError(throwable: Throwable)
 }

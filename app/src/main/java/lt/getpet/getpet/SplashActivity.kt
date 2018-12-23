@@ -2,7 +2,6 @@ package lt.getpet.getpet
 
 import android.os.Bundle
 import android.widget.Toast
-import io.reactivex.Single
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
@@ -35,18 +34,9 @@ class SplashActivity : BaseActivity() {
         super.onStart()
 
         subscriptions.add(
-                Single.fromCallable {
-                    val user = authenticationManager.getCurrentUser()
-                    if (user == null) {
-                        authenticationManager.signInAnonymously(this)
-                    } else {
-                        Single.just(user)
-                    }
-                }.subscribeOn(ioScheduler)
-                        .flatMap { it }
-                        .flatMap {
-                            apiService.getPets()
-                        }.map { pets ->
+                apiService.getPets()
+                        .subscribeOn(ioScheduler)
+                        .map { pets ->
                             petsDao.insertPets(pets)
                         }.observeOn(uiScheduler)
                         .subscribe({

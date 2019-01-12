@@ -37,6 +37,7 @@ class PetSwipeFragment : BaseFragment() {
     lateinit var petsService: PetsService
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
+
     lateinit var adapter: PetAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -154,16 +155,14 @@ class PetSwipeFragment : BaseFragment() {
             override fun onCardSwiped(direction: SwipeDirection) {
                 val pos = activity_main_card_stack_view.topIndex - 1
 
-                if (pos >= adapter.count - 1) {
-                    showNoPets()
-                    return
-                }
-
                 val pet = adapter.getItem(pos)
-                if (direction == SwipeDirection.Right && pet != null) {
-                    savePetChoice(pet, true)
-                } else if (direction == SwipeDirection.Left && pet != null) {
-                    savePetChoice(pet, false)
+                when {
+                    pet == null -> showNoPets()
+                    direction == SwipeDirection.Right -> savePetChoice(pet, true)
+                    direction == SwipeDirection.Left -> savePetChoice(pet, false)
+                }
+                if (adapter.getItem(pos + 1) == null) {
+                    showNoPets()
                 }
             }
 

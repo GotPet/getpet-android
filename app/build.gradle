@@ -7,7 +7,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
 
 def major = 0
-def minor = 6
+def minor = 7
 def patch = 0
 
 android {

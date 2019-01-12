@@ -27,7 +27,7 @@ class PetProfileActivity : BaseActivity() {
         intent.getParcelableExtra<Pet>(EXTRA_PET)
     }
 
-    val isGetPetButtonShown: Boolean by lazy {
+    private val isGetPetButtonShown: Boolean by lazy {
         intent.getBooleanExtra(EXTRA_SHOW_GET_PET_BUTTON, false)
     }
 

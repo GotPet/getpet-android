@@ -1,10 +1,9 @@
 package lt.getpet.getpet.services
 
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import lt.getpet.getpet.authentication.AuthenticationManager
-import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.data.PetChoice
-import lt.getpet.getpet.data.PetChoiceRequest
+import lt.getpet.getpet.data.*
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
 import javax.inject.Inject
@@ -30,6 +29,38 @@ class PetsService @Inject constructor(
                 Single.fromCallable { true }
             }
         }
+    }
+
+    fun generatePetsToSwipe(): Single<List<Long>> {
+        return Single.zip(petsDao.getLikedPetIds(), petsDao.getDislikedPetIds(),
+                BiFunction { likedPetIds: List<Long>, dislikedPetIds: List<Long> ->
+                    GeneratePetsRequest(likedPets = likedPetIds, dislikedPets = dislikedPetIds)
+                })
+                .flatMap {
+                    petApiService.generatePets(it)
+                }.map { pets ->
+                    petsDao.deletePets(pets)
+                    petsDao.insertPets(pets)
+                }
+    }
+
+    // TODO follow pagination for getPets
+    fun updatePetsData(): Single<Int> {
+        return petsDao.getLikedPetIds()
+                .flatMap { petIds ->
+                    if (petIds.isNotEmpty()) {
+                        petApiService.getPets(petIds)
+                    } else {
+                        Single.just(PetResponse(results = emptyList()))
+                    }
+                }.map { petsResponse ->
+                    val pets = petsResponse.results
+                    if (pets.isNotEmpty()) {
+                        petsDao.updatePets(petsResponse.results)
+                    } else {
+                        0
+                    }
+                }
     }
 
 }

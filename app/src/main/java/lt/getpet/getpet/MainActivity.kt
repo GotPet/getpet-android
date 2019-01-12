@@ -6,21 +6,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.google.android.material.tabs.TabLayout
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
-import lt.getpet.getpet.data.PetResponse
 import lt.getpet.getpet.fragments.FavoritePetsFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
-import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
+import lt.getpet.getpet.services.PetsService
 import timber.log.Timber
 import javax.inject.Inject
 
 
 class MainActivity : BaseActivity() {
+
     @Inject
-    lateinit var apiService: PetApiService
+    lateinit var petsService: PetsService
 
     @Inject
     lateinit var petsDao: PetDao
@@ -64,19 +63,10 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    // TODO follow pagination for getPets
     private fun updatePets() {
-        val disposable = petsDao.getLikedPetIds()
+        val disposable = petsService.updatePetsData()
                 .subscribeOn(ioScheduler)
-                .flatMap { petIds ->
-                    if (petIds.isNotEmpty()) {
-                        apiService.getPets(petIds)
-                    } else {
-                        Single.just(PetResponse(results = emptyList()))
-                    }
-                }.map { petsResponse ->
-                    petsDao.updatePets(petsResponse.results)
-                }.observeOn(uiScheduler)
+                .observeOn(uiScheduler)
                 .subscribe({
                     Timber.d("Pets in DB has been updated")
                 }, { t ->

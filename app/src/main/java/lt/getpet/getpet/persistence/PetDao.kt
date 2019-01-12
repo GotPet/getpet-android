@@ -30,5 +30,8 @@ interface PetDao {
     @Update
     fun updatePets(pets: List<Pet>): Int
 
+    @Delete
+    fun deletePets(pets: List<Pet>): Int
+
 
 }

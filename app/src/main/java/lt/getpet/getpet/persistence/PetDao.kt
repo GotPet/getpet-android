@@ -21,7 +21,7 @@ interface PetDao {
     @Query("SELECT Pets.id FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id AND PetChoices.is_favorite = 0")
     fun getDislikedPetIds(): Single<List<Long>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPetChoice(petChoice: PetChoice): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -34,5 +34,6 @@
     <string name="button_get_pet">GetPet</string>
     <string name="button_next">Kitas</string>
     <string name="button_end_onboarding">Pabaigti</string>
+    <string name="delete_pet">Pašalinti gyvūną iš sąrašo</string>
 
 </resources>

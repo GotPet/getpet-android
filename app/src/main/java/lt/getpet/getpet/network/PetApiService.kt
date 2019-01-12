@@ -1,13 +1,9 @@
 package lt.getpet.getpet.network
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import lt.getpet.getpet.data.*
 import okhttp3.ResponseBody
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface PetApiService {
 
@@ -22,11 +18,11 @@ interface PetApiService {
     fun generatePets(@Body generatePetsRequest: GeneratePetsRequest): Single<List<Pet>>
 
 
-    @POST("api/v1/pets/pet/choice/")
-    fun savePetChoice(@Body petChoiceRequest: PetChoiceRequest): Observable<ResponseBody>
+    @PUT("api/v1/pets/pet/choice/")
+    fun savePetChoice(@Body petChoiceRequest: PetChoiceRequest): Single<ResponseBody>
 
 
     @POST("api/v1/pets/pet/shelter/")
-    fun shelterPet(@Body shelterPetRequest: ShelterPetRequest): Observable<ResponseBody>
+    fun shelterPet(@Body shelterPetRequest: ShelterPetRequest): Single<ResponseBody>
 
 }

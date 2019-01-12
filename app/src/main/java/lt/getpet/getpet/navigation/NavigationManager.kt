@@ -9,7 +9,7 @@ import lt.getpet.getpet.OnboardingActivity
 import lt.getpet.getpet.PetProfileActivity
 import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
-import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_FAVORITE_BUTTON
+import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_GET_PET_BUTTON
 import lt.getpet.getpet.constants.ActivityConstants.Companion.PET_FAVORITE
 import lt.getpet.getpet.constants.ActivityConstants.Companion.RC_SIGN_IN
 import lt.getpet.getpet.data.Pet
@@ -41,10 +41,10 @@ class NavigationManager(private val authenticationManager: AuthenticationManager
         activity.startActivity(intent)
     }
 
-    fun navigateToPetProfileActivity(fragment: Fragment, pet: Pet, showFavoriteButton: Boolean) {
+    fun navigateToPetProfileActivity(fragment: Fragment, pet: Pet, showGetPetButton: Boolean) {
         val intent = Intent(fragment.context, PetProfileActivity::class.java).apply {
             putExtra(EXTRA_PET, pet)
-            putExtra(EXTRA_SHOW_FAVORITE_BUTTON, showFavoriteButton)
+            putExtra(EXTRA_SHOW_GET_PET_BUTTON, showGetPetButton)
         }
         fragment.startActivityForResult(intent, PET_FAVORITE)
     }

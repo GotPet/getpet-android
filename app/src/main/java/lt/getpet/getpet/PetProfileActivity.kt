@@ -8,7 +8,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.adapters.PetPhotosAdapter
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
-import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_FAVORITE_BUTTON
+import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_SHOW_GET_PET_BUTTON
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.services.PetsService
@@ -27,8 +27,8 @@ class PetProfileActivity : BaseActivity() {
         intent.getParcelableExtra<Pet>(EXTRA_PET)
     }
 
-    val isShowingPetFavoritig: Boolean by lazy {
-        intent.getBooleanExtra(EXTRA_SHOW_FAVORITE_BUTTON, false)
+    val isGetPetButtonShown: Boolean by lazy {
+        intent.getBooleanExtra(EXTRA_SHOW_GET_PET_BUTTON, false)
     }
 
     @SuppressLint("RestrictedApi")
@@ -67,13 +67,12 @@ class PetProfileActivity : BaseActivity() {
             finish()
         }
 
-        if (isShowingPetFavoritig) {
-            fab_favorite_pet.visibility = View.VISIBLE
-            button_get_pet.visibility = View.GONE
-        } else {
+        if (isGetPetButtonShown) {
             fab_favorite_pet.visibility = View.GONE
             button_get_pet.visibility = View.VISIBLE
-
+        } else {
+            fab_favorite_pet.visibility = View.VISIBLE
+            button_get_pet.visibility = View.GONE
         }
     }
 
@@ -96,7 +95,7 @@ class PetProfileActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if (!isShowingPetFavoritig) {
+        if (isGetPetButtonShown) {
             menuInflater.inflate(R.menu.profile_menu, menu)
         }
 

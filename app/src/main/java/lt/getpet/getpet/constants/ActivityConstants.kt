@@ -7,6 +7,6 @@ class ActivityConstants {
 
 
         const val EXTRA_PET = "pet"
-        const val EXTRA_SHOW_FAVORITE_BUTTON = "SHOW_FAVORITE_BUTTON"
+        const val EXTRA_SHOW_GET_PET_BUTTON = "EXTRA_SHOW_GET_PET_BUTTON"
     }
 }

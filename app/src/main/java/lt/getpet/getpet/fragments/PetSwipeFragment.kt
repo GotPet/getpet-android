@@ -1,8 +1,5 @@
 package lt.getpet.getpet.fragments
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
@@ -10,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.yuyakaido.android.cardstackview.CardStackView
-import com.yuyakaido.android.cardstackview.SwipeDirection
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.CardStackListener
+import com.yuyakaido.android.cardstackview.Direction
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.fragment_swipe.*
+import kotlinx.android.synthetic.main.fragment_pet_swipe.*
 import lt.getpet.getpet.R
-import lt.getpet.getpet.adapters.PetAdapter
+import lt.getpet.getpet.adapters.PetSwipeAdapter
 import lt.getpet.getpet.constants.ActivityConstants.Companion.PET_FAVORITE
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.navigation.NavigationManager
@@ -25,7 +23,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class PetSwipeFragment : BaseFragment() {
+class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPetClickedListener {
+
 
     @Inject
     lateinit var petsDao: PetDao
@@ -38,7 +37,12 @@ class PetSwipeFragment : BaseFragment() {
 
     private var subscriptions: CompositeDisposable = CompositeDisposable()
 
-    lateinit var adapter: PetAdapter
+    private lateinit var swipeAdapter: PetSwipeAdapter
+
+    private val cardStackLayoutManager: CardStackLayoutManager by lazy {
+        CardStackLayoutManager(context, this)
+    }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -71,9 +75,8 @@ class PetSwipeFragment : BaseFragment() {
     }
 
     private fun showPets(petsList: List<Pet>) {
-        adapter = PetAdapter(context!!)
-        adapter.addAll(petsList)
-        activity_main_card_stack_view.setAdapter(adapter)
+        swipeAdapter = PetSwipeAdapter(context!!, this, petsList)
+        card_stack_view.adapter = swipeAdapter
 
         if (petsList.isNotEmpty()) {
             changeState(State.CONTENT)
@@ -83,46 +86,46 @@ class PetSwipeFragment : BaseFragment() {
     }
 
     private fun swipeRight() {
-        val target = activity_main_card_stack_view.topView
-        val targetOverlay = activity_main_card_stack_view.topView.overlayContainer
-
-        val rotation = ObjectAnimator.ofPropertyValuesHolder(
-                target, PropertyValuesHolder.ofFloat("rotation", -10f))
-        rotation.duration = 200
-        val translateX = ObjectAnimator.ofPropertyValuesHolder(
-                target, PropertyValuesHolder.ofFloat("translationX", 0f, -2000f))
-        val translateY = ObjectAnimator.ofPropertyValuesHolder(
-                target, PropertyValuesHolder.ofFloat("translationY", 0f, 500f))
-        translateX.startDelay = 100
-        translateY.startDelay = 100
-        translateX.duration = 500
-        translateY.duration = 500
-        val cardAnimationSet = AnimatorSet()
-        cardAnimationSet.playTogether(rotation, translateX, translateY)
-
-        val overlayAnimator = ObjectAnimator.ofFloat(targetOverlay, "alpha", 0f, 1f)
-        overlayAnimator.duration = 200
-        val overlayAnimationSet = AnimatorSet()
-        overlayAnimationSet.playTogether(overlayAnimator)
-
-        activity_main_card_stack_view.swipe(SwipeDirection.Right, cardAnimationSet, overlayAnimationSet)
+//        val target = activity_main_card_stack_view.topView
+//        val targetOverlay = activity_main_card_stack_view.topView.overlayContainer
+//
+//        val rotation = ObjectAnimator.ofPropertyValuesHolder(
+//                target, PropertyValuesHolder.ofFloat("rotation", -10f))
+//        rotation.duration = 200
+//        val translateX = ObjectAnimator.ofPropertyValuesHolder(
+//                target, PropertyValuesHolder.ofFloat("translationX", 0f, -2000f))
+//        val translateY = ObjectAnimator.ofPropertyValuesHolder(
+//                target, PropertyValuesHolder.ofFloat("translationY", 0f, 500f))
+//        translateX.startDelay = 100
+//        translateY.startDelay = 100
+//        translateX.duration = 500
+//        translateY.duration = 500
+//        val cardAnimationSet = AnimatorSet()
+//        cardAnimationSet.playTogether(rotation, translateX, translateY)
+//
+//        val overlayAnimator = ObjectAnimator.ofFloat(targetOverlay, "alpha", 0f, 1f)
+//        overlayAnimator.duration = 200
+//        val overlayAnimationSet = AnimatorSet()
+//        overlayAnimationSet.playTogether(overlayAnimator)
+//
+//        activity_main_card_stack_view.swipe(SwipeDirection.Right, cardAnimationSet, overlayAnimationSet)
     }
 
     private fun changeState(state: State) {
         when (state) {
             State.LOADING -> {
                 no_content.visibility = View.GONE
-                activity_main_card_stack_view.visibility = View.GONE
+                card_stack_view.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.VISIBLE
             }
             State.NO_CONTENT -> {
                 no_content.visibility = View.VISIBLE
-                activity_main_card_stack_view.visibility = View.GONE
+                card_stack_view.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.GONE
             }
             State.CONTENT -> {
                 no_content.visibility = View.GONE
-                activity_main_card_stack_view.visibility = View.VISIBLE
+                card_stack_view.visibility = View.VISIBLE
                 activity_main_progress_bar.visibility = View.GONE
             }
         }
@@ -132,7 +135,7 @@ class PetSwipeFragment : BaseFragment() {
         changeState(State.NO_CONTENT)
     }
 
-    fun savePetChoice(pet: Pet, isFavorite: Boolean) {
+    private fun savePetChoice(pet: Pet, isFavorite: Boolean) {
         val disposable = petsService.savePetChoice(pet, isFavorite)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -147,42 +150,43 @@ class PetSwipeFragment : BaseFragment() {
 
     private fun setup() {
         changeState(State.LOADING)
-
-        activity_main_card_stack_view.setCardEventListener(object : CardStackView.CardEventListener {
-            override fun onCardDragging(percentX: Float, percentY: Float) {
-            }
-
-            override fun onCardSwiped(direction: SwipeDirection) {
-                val pos = activity_main_card_stack_view.topIndex - 1
-
-                val pet = adapter.getItem(pos)
-                when {
-                    pet == null -> showNoPets()
-                    direction == SwipeDirection.Right -> savePetChoice(pet, true)
-                    direction == SwipeDirection.Left -> savePetChoice(pet, false)
-                }
-                if (pos + 1 == adapter.count) {
-                    showNoPets()
-                }
-            }
-
-            override fun onCardReversed() {
-            }
-
-            override fun onCardMovedToOrigin() {
-            }
-
-            override fun onCardClicked(index: Int) {
-                val pet = adapter.getItem(index)!!
-
-                navigationManager.navigateToPetProfileActivity(this@PetSwipeFragment, pet, false)
-            }
-        })
+        card_stack_view.layoutManager = cardStackLayoutManager
     }
+
+    override fun onPetClicked(pet: Pet) {
+        navigationManager.navigateToPetProfileActivity(this, pet, false)
+    }
+
+    override fun onCardSwiped(direction: Direction?) {
+        val position = cardStackLayoutManager.topPosition - 1
+
+        val pet = swipeAdapter.getPet(position)
+        when (direction) {
+            Direction.Right -> savePetChoice(pet, true)
+            Direction.Left -> savePetChoice(pet, false)
+            else -> {
+                Timber.d("Swiped to another direction $direction")
+            }
+        }
+
+        if (position + 1 == swipeAdapter.itemCount) {
+            showNoPets()
+        }
+    }
+
+    override fun onCardDisappeared(view: View?, position: Int) {}
+
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
+
+    override fun onCardCanceled() {}
+
+    override fun onCardAppeared(view: View?, position: Int) {}
+
+    override fun onCardRewound() {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_swipe, container, false)
+        return inflater.inflate(R.layout.fragment_pet_swipe, container, false)
     }
 
 

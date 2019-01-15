@@ -26,21 +26,38 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/doggie_lui_peng_unsplash" />
 
-        <TextView
-            android:id="@+id/pet_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/roboto_medium"
-            android:maxLines="1"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_28"
-            android:textStyle="bold"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/pet_short_description"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:text="Dogis" />
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <TextView
+                android:id="@+id/pet_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_medium"
+                android:maxLines="1"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_28"
+                android:textStyle="bold"
+                tools:text="Dogis" />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:srcCompat="@drawable/information" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/pet_short_description"
@@ -56,6 +73,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:text="Ieskau draugo" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -161,7 +161,7 @@ class PetSwipeFragment : BaseFragment() {
                     direction == SwipeDirection.Right -> savePetChoice(pet, true)
                     direction == SwipeDirection.Left -> savePetChoice(pet, false)
                 }
-                if (adapter.getItem(pos + 1) == null) {
+                if (pos + 1  == adapter.count) {
                     showNoPets()
                 }
             }

@@ -49,7 +49,7 @@ class PetsService @Inject constructor(
         return petsDao.getLikedPetIds()
                 .flatMap { petIds ->
                     if (petIds.isNotEmpty()) {
-                        petApiService.getPets(petIds)
+                        petApiService.getPets(PetIdsRequest(petIds))
                     } else {
                         Single.just(PetResponse(results = emptyList()))
                     }

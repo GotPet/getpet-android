@@ -12,7 +12,7 @@ interface PetApiService {
 
 
     @GET("api/v1/pets/")
-    fun getPets(@Query("pet_ids") petIds: List<Long>, @Query("page") page: Int = 1): Single<PetResponse>
+    fun getPets(@Query("pet_ids") petIds: PetIdsRequest, @Query("page") page: Int = 1): Single<PetResponse>
 
     @POST("api/v1/pets/generate/")
     fun generatePets(@Body generatePetsRequest: GeneratePetsRequest): Single<List<Pet>>

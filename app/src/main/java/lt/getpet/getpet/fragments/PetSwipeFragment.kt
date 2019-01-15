@@ -81,34 +81,12 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
         if (petsList.isNotEmpty()) {
             changeState(State.CONTENT)
         } else {
-            showNoPets()
+            changeState(State.NO_CONTENT)
         }
     }
 
     private fun swipeRight() {
-//        val target = activity_main_card_stack_view.topView
-//        val targetOverlay = activity_main_card_stack_view.topView.overlayContainer
-//
-//        val rotation = ObjectAnimator.ofPropertyValuesHolder(
-//                target, PropertyValuesHolder.ofFloat("rotation", -10f))
-//        rotation.duration = 200
-//        val translateX = ObjectAnimator.ofPropertyValuesHolder(
-//                target, PropertyValuesHolder.ofFloat("translationX", 0f, -2000f))
-//        val translateY = ObjectAnimator.ofPropertyValuesHolder(
-//                target, PropertyValuesHolder.ofFloat("translationY", 0f, 500f))
-//        translateX.startDelay = 100
-//        translateY.startDelay = 100
-//        translateX.duration = 500
-//        translateY.duration = 500
-//        val cardAnimationSet = AnimatorSet()
-//        cardAnimationSet.playTogether(rotation, translateX, translateY)
-//
-//        val overlayAnimator = ObjectAnimator.ofFloat(targetOverlay, "alpha", 0f, 1f)
-//        overlayAnimator.duration = 200
-//        val overlayAnimationSet = AnimatorSet()
-//        overlayAnimationSet.playTogether(overlayAnimator)
-//
-//        activity_main_card_stack_view.swipe(SwipeDirection.Right, cardAnimationSet, overlayAnimationSet)
+        card_stack_view.swipe()
     }
 
     private fun changeState(state: State) {
@@ -129,10 +107,6 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
                 activity_main_progress_bar.visibility = View.GONE
             }
         }
-    }
-
-    fun showNoPets() {
-        changeState(State.NO_CONTENT)
     }
 
     private fun savePetChoice(pet: Pet, isFavorite: Boolean) {
@@ -170,7 +144,7 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
         }
 
         if (position + 1 == swipeAdapter.itemCount) {
-            showNoPets()
+            changeState(State.NO_CONTENT)
         }
     }
 

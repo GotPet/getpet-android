@@ -48,7 +48,6 @@ class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.Pet
 
 
         recyclerView = pets_recycler_view.apply {
-            setHasFixedSize(true)
             adapter = favoritePetsListAdapter
         }
 
@@ -78,8 +77,10 @@ class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.Pet
         favoritePetsListAdapter.bindData(pets, petsWithGetPetRequest)
         if (pets.isEmpty()) {
             no_content.visibility = VISIBLE
+            pets_recycler_view.visibility = GONE
         } else {
             no_content.visibility = GONE
+            pets_recycler_view.visibility = VISIBLE
         }
     }
 

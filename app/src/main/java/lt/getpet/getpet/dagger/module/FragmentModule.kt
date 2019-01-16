@@ -2,7 +2,7 @@ package lt.getpet.getpet.dagger.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import lt.getpet.getpet.fragments.FavoritePetsFragment
+import lt.getpet.getpet.fragments.FavoritePetsListFragment
 import lt.getpet.getpet.fragments.OnBoardingFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
@@ -11,7 +11,7 @@ import lt.getpet.getpet.fragments.UserProfileFragment
 abstract class FragmentModule {
 
     @ContributesAndroidInjector
-    abstract fun favoritePetsFragment(): FavoritePetsFragment
+    abstract fun favoritePetsFragment(): FavoritePetsListFragment
 
     @ContributesAndroidInjector
     abstract fun petSwipeFragment(): PetSwipeFragment

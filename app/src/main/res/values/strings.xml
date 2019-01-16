@@ -36,4 +36,7 @@
     <string name="button_end_onboarding">Pabaigti</string>
     <string name="delete_pet">Pašalinti gyvūną iš sąrašo</string>
 
+    <string name="my_favorite_pets">Mano mėgstami gyvūnai</string>
+    <string name="my_get_pet_requests">Mano norai paimti gyvūnus</string>
+
 </resources>

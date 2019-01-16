@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import lt.getpet.getpet.fragments.FavoritePetsFragment
+import lt.getpet.getpet.fragments.FavoritePetsListFragment
 import lt.getpet.getpet.fragments.PetSwipeFragment
 import lt.getpet.getpet.fragments.UserProfileFragment
 import lt.getpet.getpet.persistence.PetDao
@@ -83,7 +83,7 @@ class MainActivity : BaseActivity() {
             return when (position) {
                 0 -> UserProfileFragment.newInstance()
                 1 -> PetSwipeFragment.newInstance()
-                2 -> FavoritePetsFragment.newInstance()
+                2 -> FavoritePetsListFragment.newInstance()
                 else -> throw IllegalArgumentException("Tab for position $position doesn't exist")
 
             }

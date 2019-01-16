@@ -7,7 +7,7 @@ import androidx.room.TypeConverters
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.data.PetChoice
 
-@Database(entities = [Pet::class, PetChoice::class], version = 2)
+@Database(entities = [Pet::class, PetChoice::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class PetsDatabase : RoomDatabase() {
 

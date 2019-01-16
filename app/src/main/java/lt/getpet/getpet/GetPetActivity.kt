@@ -6,21 +6,19 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.data.Pet
-import lt.getpet.getpet.data.ShelterPetRequest
-import lt.getpet.getpet.network.PetApiService
+import lt.getpet.getpet.services.PetsService
 import timber.log.Timber
 import javax.inject.Inject
 
 class GetPetActivity : BaseActivity() {
 
     @Inject
-    lateinit var petApiService: PetApiService
+    lateinit var petsService: PetsService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_pet)
-
 
         val pet = intent.getParcelableExtra<Pet>(EXTRA_PET)
 
@@ -36,7 +34,7 @@ class GetPetActivity : BaseActivity() {
         shelter_email.text = pet.shelter.email
         shelter_phone.text = pet.shelter.phone
 
-        val apiDisposable = petApiService.shelterPet(ShelterPetRequest(petId = pet.id))
+        val disposable = petsService.shelterPet(pet)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe({
@@ -45,6 +43,6 @@ class GetPetActivity : BaseActivity() {
                     Timber.w(it)
                 })
 
-        subscriptions.add(apiDisposable)
+        subscriptions.add(disposable)
     }
 }

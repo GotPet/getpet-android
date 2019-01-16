@@ -4,8 +4,12 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.data.*
+import lt.getpet.getpet.data.PetChoice.Companion.STATUS_PET_DISLIKED
+import lt.getpet.getpet.data.PetChoice.Companion.STATUS_PET_FAVORITE
+import lt.getpet.getpet.data.PetChoice.Companion.STATUS_PET_WITH_GETPET_REQUEST
 import lt.getpet.getpet.network.PetApiService
 import lt.getpet.getpet.persistence.PetDao
+import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +21,8 @@ class PetsService @Inject constructor(
 ) {
 
     fun savePetChoice(pet: Pet, isFavorite: Boolean): Single<Boolean> {
-        val petChoice = PetChoice(petId = pet.id, isFavorite = isFavorite)
+        val status = if (isFavorite) STATUS_PET_FAVORITE else STATUS_PET_DISLIKED
+        val petChoice = PetChoice(petId = pet.id, status = status)
         val petChoiceRequest = PetChoiceRequest(petId = pet.id, favorite = isFavorite)
 
         return Single.fromCallable {
@@ -28,6 +33,16 @@ class PetsService @Inject constructor(
             } else {
                 Single.fromCallable { true }
             }
+        }
+    }
+
+    fun shelterPet(pet: Pet): Single<ResponseBody> {
+        val petChoice = PetChoice(petId = pet.id, status = STATUS_PET_WITH_GETPET_REQUEST)
+
+        return Single.fromCallable {
+            petsDao.insertPetChoice(petChoice)
+        }.flatMap {
+            petApiService.shelterPet(ShelterPetRequest(petId = pet.id))
         }
     }
 

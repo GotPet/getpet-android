@@ -9,16 +9,25 @@ import lt.getpet.getpet.data.PetChoice
 @Dao
 interface PetDao {
 
-    @Query("SELECT Pets.* FROM Pets LEFT JOIN PetChoices ON Pets.id = PetChoices.pet_id WHERE PetChoices.is_favorite IS NULL")
+    @Query("SELECT Pets.* FROM Pets LEFT JOIN PetChoices ON Pets.id = PetChoices.pet_id WHERE PetChoices.status IS NULL")
     fun getRemainingPets(): Single<List<Pet>>
 
-    @Query("SELECT Pets.* FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id AND PetChoices.is_favorite = 1 ORDER BY PetChoices.created_at DESC")
+    @Query("SELECT Pets.* FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id " +
+            "AND PetChoices.status IN (${PetChoice.STATUS_PET_FAVORITE}, ${PetChoice.STATUS_PET_WITH_GETPET_REQUEST}) " +
+            "ORDER BY PetChoices.created_at DESC")
     fun getFavoritePets(): Flowable<List<Pet>>
 
-    @Query("SELECT Pets.id FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id AND PetChoices.is_favorite = 1")
+    @Query("SELECT Pets.* FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id " +
+            "AND PetChoices.status = ${PetChoice.STATUS_PET_WITH_GETPET_REQUEST} " +
+            "ORDER BY PetChoices.created_at DESC")
+    fun getPetsWithGetPetRequests(): Flowable<List<Pet>>
+
+    @Query("SELECT Pets.id FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id " +
+            "AND PetChoices.status IN (${PetChoice.STATUS_PET_FAVORITE}, ${PetChoice.STATUS_PET_WITH_GETPET_REQUEST})")
     fun getLikedPetIds(): Single<List<Long>>
 
-    @Query("SELECT Pets.id FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id AND PetChoices.is_favorite = 0")
+    @Query("SELECT Pets.id FROM Pets INNER JOIN PetChoices ON Pets.id = PetChoices.pet_id " +
+            "AND PetChoices.status = ${PetChoice.STATUS_PET_DISLIKED}")
     fun getDislikedPetIds(): Single<List<Long>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

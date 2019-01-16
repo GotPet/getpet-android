@@ -14,11 +14,13 @@ class FavoritePetsListAdapter(
         LabelDelegateAdapter(),
         FavoritePetsDelegateAdapter(context, listener)
 ) {
-    fun bindData(pets: List<Pet>) {
+    fun bindData(pets: List<Pet>, petsWithGetPetRequest: List<Pet>) {
         items = listOf()
 
-
-        // items = items.plus(LabelDelegateAdapter.LabelItem(R.string.my_get_pet_requests))
+        if (petsWithGetPetRequest.isNotEmpty()) {
+            items = items.plus(LabelDelegateAdapter.LabelItem(R.string.my_get_pet_requests))
+                    .plus(petsWithGetPetRequest)
+        }
 
         items = items.plus(LabelDelegateAdapter.LabelItem(R.string.my_favorite_pets))
                 .plus(pets)

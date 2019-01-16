@@ -21,8 +21,20 @@ data class PetChoice(
         val id: Long = 0,
         @ColumnInfo(name = "pet_id")
         val petId: Long,
-        @ColumnInfo(name = "is_favorite", index = true)
-        val isFavorite: Boolean,
+        @ColumnInfo(name = "status", index = true)
+        val status: Int,
         @ColumnInfo(name = "created_at")
         var createdAt: Long = System.currentTimeMillis()
-) : Parcelable
+) : Parcelable {
+    companion object {
+        const val STATUS_PET_DISLIKED = 0
+        const val STATUS_PET_FAVORITE = 1
+        const val STATUS_PET_WITH_GETPET_REQUEST = 2
+    }
+}
+
+enum class PetChoiceStatus(val id: Int) {
+    DISLIKED(PetChoice.STATUS_PET_DISLIKED),
+    FAVORITE(PetChoice.STATUS_PET_FAVORITE),
+    WITH_GETPET_REQUEST(PetChoice.STATUS_PET_WITH_GETPET_REQUEST)
+}

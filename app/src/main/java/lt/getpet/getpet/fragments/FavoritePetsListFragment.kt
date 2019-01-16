@@ -8,7 +8,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_pet_favorites.*
 import lt.getpet.getpet.R
 import lt.getpet.getpet.adapters.FavoritePetsListAdapter
@@ -50,11 +52,14 @@ class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.Pet
             adapter = favoritePetsListAdapter
         }
 
-        subscription = petsDao.getFavoritePets()
+        subscription = Flowable.zip(petsDao.getFavoritePets(), petsDao.getPetsWithGetPetRequests(),
+                BiFunction { favoritePets: List<Pet>, petsWithGetPetRequest: List<Pet> ->
+                    Pair(favoritePets, petsWithGetPetRequest)
+                })
                 .subscribeOn(dbScheduler)
                 .observeOn(uiScheduler)
                 .subscribe({ it ->
-                    showPets(it)
+                    showPets(it.first, it.second)
                 }, {
                     Toast.makeText(context, "Error loading pets", Toast.LENGTH_SHORT).show()
                 })
@@ -69,9 +74,9 @@ class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.Pet
         subscription?.dispose()
     }
 
-    private fun showPets(pets: List<Pet>) {
-        favoritePetsListAdapter.bindData(pets)
-        if (favoritePetsListAdapter.itemCount == 0) {
+    private fun showPets(pets: List<Pet>, petsWithGetPetRequest: List<Pet>) {
+        favoritePetsListAdapter.bindData(pets, petsWithGetPetRequest)
+        if (pets.isEmpty()) {
             no_content.visibility = VISIBLE
         } else {
             no_content.visibility = GONE

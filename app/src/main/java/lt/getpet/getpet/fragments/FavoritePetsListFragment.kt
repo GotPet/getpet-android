@@ -18,6 +18,7 @@ import lt.getpet.getpet.adapters.delegates.FavoritePetsDelegateAdapter
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.navigation.NavigationManager
 import lt.getpet.getpet.persistence.PetDao
+import timber.log.Timber
 import javax.inject.Inject
 
 class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.PetClickedListener {
@@ -60,6 +61,7 @@ class FavoritePetsListFragment : BaseFragment(), FavoritePetsDelegateAdapter.Pet
                 .subscribe({ it ->
                     showPets(it.first, it.second)
                 }, {
+                    Timber.w(it)
                     Toast.makeText(context, "Error loading pets", Toast.LENGTH_SHORT).show()
                 })
     }

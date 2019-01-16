@@ -22,7 +22,7 @@ interface PetApiService {
     fun savePetChoice(@Body petChoiceRequest: PetChoiceRequest): Single<ResponseBody>
 
 
-    @POST("api/v1/pets/pet/shelter/")
+    @PUT("api/v1/pets/pet/shelter/")
     fun shelterPet(@Body shelterPetRequest: ShelterPetRequest): Single<ResponseBody>
 
 }

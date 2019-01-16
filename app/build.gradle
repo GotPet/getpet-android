@@ -6,9 +6,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
 
-def major = 0
-def minor = 8
-def patch = 1
+def major = 1
+def minor = 0
+def patch = 0
 
 android {
     compileSdkVersion 28

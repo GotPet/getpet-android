@@ -46,6 +46,10 @@ class PetsService @Inject constructor(
         }
     }
 
+    fun getPetsToSwipe(): Single<List<Pet>> {
+        return petsDao.getPetsToSwipe()
+    }
+
     fun generatePetsToSwipe(): Single<List<Long>> {
         return Single.zip(petsDao.getLikedPetIds(), petsDao.getDislikedPetIds(),
                 BiFunction { likedPetIds: List<Long>, dislikedPetIds: List<Long> ->
@@ -61,7 +65,7 @@ class PetsService @Inject constructor(
 
     // TODO follow pagination for getPets
     fun updatePetsData(): Single<Int> {
-        return petsDao.getLikedPetIds()
+        return petsDao.getChosenPetIds()
                 .flatMap { petIds ->
                     if (petIds.isNotEmpty()) {
                         petApiService.getPets(PetIdsRequest(petIds))

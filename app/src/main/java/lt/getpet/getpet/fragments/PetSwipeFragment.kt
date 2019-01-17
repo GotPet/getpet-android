@@ -17,17 +17,12 @@ import lt.getpet.getpet.adapters.PetSwipeAdapter
 import lt.getpet.getpet.constants.ActivityConstants.Companion.PET_FAVORITE
 import lt.getpet.getpet.data.Pet
 import lt.getpet.getpet.navigation.NavigationManager
-import lt.getpet.getpet.persistence.PetDao
 import lt.getpet.getpet.services.PetsService
 import timber.log.Timber
 import javax.inject.Inject
 
 
 class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPetClickedListener {
-
-
-    @Inject
-    lateinit var petsDao: PetDao
 
     @Inject
     lateinit var navigationManager: NavigationManager
@@ -49,7 +44,7 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
 
         setup()
 
-        val disposable = petsDao.getRemainingPets()
+        val disposable = petsService.getPetsToSwipe()
                 .subscribeOn(dbScheduler)
                 .observeOn(uiScheduler)
                 .subscribe({ it ->

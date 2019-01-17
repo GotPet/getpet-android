@@ -136,9 +136,13 @@ class AuthenticationManager(
     // TODO map to correct provider
     private fun FirebaseUser.mapToUser(): User? {
         if (!this.isAnonymous) {
+            val email = this.email ?: this.providerData.firstOrNull { this.email != null }?.email
+            val name = this.displayName
+                    ?: this.providerData.firstOrNull { this.displayName != null }?.displayName
+
             return User(
-                    name = this.displayName!!,
-                    email = this.email!!,
+                    name = name ?: "",
+                    email = email ?: "",
                     photo_url = this.photoUrl?.toString(),
                     provider = Provider.GOOGLE
             )

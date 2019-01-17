@@ -11,7 +11,7 @@ enum class Provider {
 @Parcelize
 data class User(
         val name: String,
-        val email: String?,
+        val email: String,
         val photo_url: String?,
         val provider: Provider
 ) : Parcelable

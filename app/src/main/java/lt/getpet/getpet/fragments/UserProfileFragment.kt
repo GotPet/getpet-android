@@ -14,6 +14,7 @@ import lt.getpet.getpet.authentication.AuthStateChangedListener
 import lt.getpet.getpet.authentication.AuthenticationManager
 import lt.getpet.getpet.data.User
 import lt.getpet.getpet.navigation.NavigationManager
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
@@ -79,6 +80,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
                 .subscribe({
                     showUserProfile(user)
                 }, {
+                    Timber.w(it)
                     Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
                 })
 

@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:tint="@color/colorRed"
+                android:tint="@color/colorPrimary"
                 app:fabSize="normal"
                 app:srcCompat="@drawable/close" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
                 android:clickable="false"
-                android:tint="@color/colorOrange"
+                android:tint="@color/colorPrimary"
                 app:fabSize="mini"
                 app:srcCompat="@drawable/rewind" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                android:tint="@color/colorGreen"
+                android:tint="@color/colorPrimary"
                 app:fabSize="normal"
                 app:srcCompat="@drawable/heart" />
 

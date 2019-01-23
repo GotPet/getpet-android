@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_pet_swipe.*
 import lt.getpet.getpet.R
@@ -63,7 +65,7 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PET_FAVORITE && resultCode == RESULT_OK) {
-            swipeRight()
+            swipeAndLikePet()
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
@@ -80,25 +82,39 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
         }
     }
 
-    private fun swipeRight() {
+    private fun swipeCard(direction: Direction) {
+        val setting = SwipeAnimationSetting.Builder()
+                .setDirection(direction)
+                .setDuration(200)
+                .setInterpolator(AccelerateInterpolator())
+                .build()
+        cardStackLayoutManager.setSwipeAnimationSetting(setting)
         card_stack_view.swipe()
+    }
+
+    private fun swipeAndLikePet() {
+        swipeCard(Direction.Right)
+    }
+
+    private fun swipeAndDislikePet() {
+        swipeCard(Direction.Left)
     }
 
     private fun changeState(state: State) {
         when (state) {
             State.LOADING -> {
                 no_content.visibility = View.GONE
-                card_stack_view.visibility = View.GONE
+                card_stack_layout.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.VISIBLE
             }
             State.NO_CONTENT -> {
                 no_content.visibility = View.VISIBLE
-                card_stack_view.visibility = View.GONE
+                card_stack_layout.visibility = View.GONE
                 activity_main_progress_bar.visibility = View.GONE
             }
             State.CONTENT -> {
                 no_content.visibility = View.GONE
-                card_stack_view.visibility = View.VISIBLE
+                card_stack_layout.visibility = View.VISIBLE
                 activity_main_progress_bar.visibility = View.GONE
             }
         }
@@ -120,6 +136,18 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
     private fun setup() {
         changeState(State.LOADING)
         card_stack_view.layoutManager = cardStackLayoutManager
+
+        pet_dislike_button.setOnClickListener {
+            swipeAndDislikePet()
+        }
+
+        pet_like_button.setOnClickListener {
+            swipeAndLikePet()
+        }
+
+        pet_rewind_button.setOnClickListener {
+            card_stack_view.rewind()
+        }
     }
 
     override fun onPetClicked(pet: Pet) {
@@ -149,7 +177,9 @@ class PetSwipeFragment : BaseFragment(), CardStackListener, PetSwipeAdapter.OnPe
 
     override fun onCardCanceled() {}
 
-    override fun onCardAppeared(view: View?, position: Int) {}
+    override fun onCardAppeared(view: View?, position: Int) {
+        pet_rewind_button.isEnabled = cardStackLayoutManager.topPosition != 0
+    }
 
     override fun onCardRewound() {}
 

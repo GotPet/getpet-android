@@ -86,7 +86,8 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_swipe_away" />
+            android:tint="@color/colorWhite"
+            app:srcCompat="@drawable/close" />
 
     </FrameLayout>
 
@@ -99,6 +100,7 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
+            android:tint="@color/colorWhite"
             app:srcCompat="@drawable/heart_outline" />
     </FrameLayout>
 

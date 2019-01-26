@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_pet_profile.*
 import lt.getpet.getpet.adapters.PetPhotosAdapter
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
@@ -15,6 +16,7 @@ import lt.getpet.getpet.services.PetsService
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class PetProfileActivity : BaseActivity() {
 
     @Inject
@@ -22,6 +24,7 @@ class PetProfileActivity : BaseActivity() {
 
     @Inject
     lateinit var petsService: PetsService
+
 
     val pet: Pet by lazy {
         intent.getParcelableExtra<Pet>(EXTRA_PET)
@@ -78,16 +81,30 @@ class PetProfileActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_pet) {
-            val disposable = petsService.savePetChoice(pet, false)
-                    .subscribeOn(ioScheduler)
-                    .observeOn(uiScheduler)
-                    .subscribe({
-                        finish()
-                    }, {
-                        Timber.w(it)
-                    })
+            val builder = AlertDialog.Builder(this, R.style.MyDialogTheme)
+            builder.setTitle(R.string.dialog_delete_title)
+                    .setMessage(R.string.dialog_delete_message)
+                    .setPositiveButton(R.string.button_ok
+                    ) { dialog, id ->
+                        val disposable = petsService.savePetChoice(pet, false)
+                                .subscribeOn(ioScheduler)
+                                .observeOn(uiScheduler)
+                                .subscribe({
+                                    finish()
+                                }, {
+                                    Timber.w(it)
+                                })
+                        subscriptions.add(disposable)
+                    }
+                    .setNegativeButton(R.string.button_cancel
+                    ) { dialog, id ->
+                        dialog.cancel() // User cancelled the dialog
+                    }
+            // Create the AlertDialog object and return it
+            builder.create()
 
-            subscriptions.add(disposable)
+            //  and showing
+            builder.show()
 
             return true
         }
@@ -101,5 +118,6 @@ class PetProfileActivity : BaseActivity() {
 
         return true
     }
+
 }
 

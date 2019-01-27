@@ -81,11 +81,11 @@ class PetProfileActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_pet) {
-            val builder = AlertDialog.Builder(this, R.style.MyDialogTheme)
+            val builder = AlertDialog.Builder(this, R.style.AppDialogTheme)
             builder.setTitle(R.string.dialog_delete_title)
                     .setMessage(R.string.dialog_delete_message)
                     .setPositiveButton(R.string.button_ok
-                    ) { dialog, id ->
+                    ) { _, _ ->
                         val disposable = petsService.savePetChoice(pet, false)
                                 .subscribeOn(ioScheduler)
                                 .observeOn(uiScheduler)
@@ -97,14 +97,11 @@ class PetProfileActivity : BaseActivity() {
                         subscriptions.add(disposable)
                     }
                     .setNegativeButton(R.string.button_cancel
-                    ) { dialog, id ->
-                        dialog.cancel() // User cancelled the dialog
+                    ) { dialog, _ ->
+                        dialog.cancel()
                     }
-            // Create the AlertDialog object and return it
-            builder.create()
 
-            //  and showing
-            builder.show()
+           builder.show()
 
             return true
         }

@@ -38,11 +38,9 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
-    <style name="MyDialogTheme" parent="Theme.MaterialComponents.Dialog.Alert">
-        <item name="android:background">@color/colorWhite</item>
-        <item name="android:textColorPrimary">@color/colorBlack</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="AppDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

@@ -31,6 +31,7 @@
     <string name="button_login_with_google">Prisijunk su Google</string>
     <string name="button_login_with_facebook">Prisijunk su Facebook</string>
     <string name="button_login">Prisijungti</string>
+    <string name="button_signout">Atsijungti</string>
     <string name="button_get_pet">GetPet</string>
     <string name="button_next">Kitas</string>
     <string name="button_end_onboarding">Pabaigti</string>

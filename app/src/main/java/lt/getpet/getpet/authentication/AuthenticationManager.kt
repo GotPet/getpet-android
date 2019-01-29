@@ -1,6 +1,7 @@
 package lt.getpet.getpet.authentication
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -105,6 +106,12 @@ class AuthenticationManager(
                 resolveMerge(pendingCredential)
             }
             else -> Single.error(response.error)
+        }
+    }
+
+    fun signOutUser(context: Context): Single<Unit> {
+        return Single.just(AuthUI.getInstance().signOut(context)).map {
+            appPreferences.apiToken.delete()
         }
     }
 

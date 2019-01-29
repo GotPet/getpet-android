@@ -1,5 +1,6 @@
 package lt.getpet.getpet.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,10 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         button_login.setOnClickListener {
             navigationManager.navigateToUserLoginActivity(activity!!)
         }
+
+        button_signout.setOnClickListener {
+            onUserSignedOut()
+        }
     }
 
     override fun onStop() {
@@ -57,6 +62,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
     private fun showAnonymousProfile() {
         user_name.setText(R.string.anonymous_user_name)
         button_login.visibility = View.VISIBLE
+        button_signout.visibility = View.GONE
         Glide.with(this).load(R.drawable.anonymous_avatar)
                 .apply(RequestOptions.circleCropTransform())
                 .into(user_photo)
@@ -65,12 +71,27 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
     private fun showUserProfile(user: User) {
         user_name.text = user.name
         button_login.visibility = View.GONE
+        button_signout.visibility = View.VISIBLE
 
         if (user.photo_url != null) {
             Glide.with(this).load(user.photo_url)
                     .apply(RequestOptions.circleCropTransform())
                     .into(user_photo)
         }
+    }
+
+    private fun onUserSignedOut() {
+        val disposable = authenticationManager.signOutUser(context!!)
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe({
+                    showAnonymousProfile()
+                }, {
+                    Timber.w(it)
+                    Toast.makeText(context, it.localizedMessage, Toast.LENGTH_LONG).show()
+                })
+
+        subscriptions.add(disposable)
     }
 
     override fun onUserLoggedIn(user: User) {
@@ -103,6 +124,5 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
             return UserProfileFragment()
         }
     }
-
 
 }

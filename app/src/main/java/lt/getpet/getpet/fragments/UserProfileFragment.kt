@@ -50,7 +50,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         }
 
         button_signout.setOnClickListener {
-            onUserSignedOut(activity!!)
+            onUserSignedOut()
         }
     }
 
@@ -80,9 +80,8 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         }
     }
 
-    private fun onUserSignedOut(context: Context) {
-        subscriptions.clear()
-        val disposable = authenticationManager.signOutUser(context)
+    private fun onUserSignedOut() {
+        val disposable = authenticationManager.signOutUser(context!!)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe({
@@ -96,7 +95,6 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
     }
 
     override fun onUserLoggedIn(user: User) {
-        subscriptions.clear()
         val disposable = authenticationManager.refreshAndGetApiToken()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)

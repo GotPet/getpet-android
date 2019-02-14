@@ -67,12 +67,30 @@
             android:id="@+id/shelter_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
+            android:textStyle="bold"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_medium"
             tools:text="VsI Naminukas" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_medium"
+            android:text="@string/push_and_contact"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/double_down" />
 
         <TextView
             android:id="@+id/shelter_phone"
@@ -98,11 +116,11 @@
             tools:text="info@naminukas.org" />
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/two_logos" />
+            android:src="@drawable/house_logo" />
 
     </LinearLayout>
 

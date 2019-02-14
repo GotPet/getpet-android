@@ -19,7 +19,6 @@ android {
         versionCode major * 10000 + minor * 100 + patch
         versionName "${major}.${minor}.${patch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
         kapt {
             arguments {
                 arg("room.schemaLocation", "$projectDir/schemas")

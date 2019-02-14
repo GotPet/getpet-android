@@ -6,6 +6,7 @@
     <string name="my_story">Mano istorija</string>
     <string name="no_more_pets_to_swipe">O ne!\nSąrašas jau baigėsi.\nPatikrink pamėgtų gyvūnų sąrašą</string>
     <string name="empty_favorites_list">Neturite pamėgtų gyvūnų,\nlaikas išssirinkti draugą!</string>
+    <string name="spausk_susisiek">Spausk ir susisiek\nsu prieglaudos atstovu!</string>
 
     <string name="facebook_application_id" translatable="false">1043794185794352</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1043794185794352</string>
@@ -45,4 +46,5 @@
     <string name="button_cancel">Atšaukti</string>
     <string name="dialog_delete_title">Ištrinti</string>
     <string name="dialog_delete_message">Ar tikrai norite pašalinti gyvūną iš mėgstamų sąrašo?</string>
+
 </resources>

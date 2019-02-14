@@ -5,7 +5,7 @@
     <string name="join_us">Prisijunk</string>
     <string name="my_story">Mano istorija</string>
     <string name="no_more_pets_to_swipe">O ne!\nSąrašas jau baigėsi.\nPatikrink pamėgtų gyvūnų sąrašą</string>
-    <string name="empty_favorites_list">Neturite pamėgtų gyvūnų,\nlaikas išssirinkti draugą!</string>
+    <string name="empty_favorites_list">Neturite pamėgtų gyvūnų,\nlaikas išsirinkti draugą!</string>
     <string name="push_and_contact">Spausk ir susisiek su prieglaudos atstovu.
         \nPaminėk, kad kreipiesi per GetPet ir gauk mentorių!</string>
 
@@ -47,5 +47,4 @@
     <string name="button_cancel">Atšaukti</string>
     <string name="dialog_delete_title">Ištrinti</string>
     <string name="dialog_delete_message">Ar tikrai norite pašalinti gyvūną iš mėgstamų sąrašo?</string>
-
 </resources>

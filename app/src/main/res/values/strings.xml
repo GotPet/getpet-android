@@ -4,7 +4,7 @@
     <string name="ar_priglausi_mane">\"Ar priglausi mane?\"</string>
     <string name="join_us">Prisijunk</string>
     <string name="my_story">Mano istorija</string>
-    <string name="no_more_pets_to_swipe">O ne!\nSąrašas jau baigėsi.\nPatikrink pamėgtų gyvūnų sąrašą</string>
+    <string name="no_more_pets_to_swipe">O ne!\nSąrašas baigėsi.\nPatikrink savo simpatijas!</string>
     <string name="empty_favorites_list">Mėgstamiausių gyvūnų sąrašas tuščias,\nlaikas susirasti simpatiją!</string>
     <string name="push_and_contact">Spausk ir susisiek su prieglaudos atstovu.
         \nPaminėk, kad kreipiesi per GetPet ir susitark dėl pasimatymo!</string>
@@ -20,7 +20,7 @@
     <!--Onboarding STRINGS-->
     <string name="onboarding_1_heading">Labas!</string>
     <string name="onboarding_1_text">Nori būti mūsų draugu?\nSusipažink su programėle!</string>
-    <string name="onboarding_2_heading">Jei susižavėjai,</string>
+    <string name="onboarding_2_heading">Susižavėjai?</string>
     <string name="onboarding_2_text">Nuslink patikusio gyvūno\nnuotrauką dešinėn - taip pridėsi\nją į mėgstamiausių sąrašą.</string>
     <string name="onboarding_3_heading">Deja, ne šį kartą?</string>
     <string name="onboarding_3_text">Jei nesusižavėjai,\nnuslink nuotrauką kairėn.</string>

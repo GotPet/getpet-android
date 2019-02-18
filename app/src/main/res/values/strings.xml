@@ -46,5 +46,5 @@
     <string name="button_ok">Taip</string>
     <string name="button_cancel">Atšaukti</string>
     <string name="dialog_delete_title">Ištrinti</string>
-    <string name="dialog_delete_message">Ar norite pašalinti gyvūną iš mėgstamiausių sąrašo?</string>
+    <string name="dialog_delete_message">Ar nori pašalinti gyvūną iš mėgstamiausių sąrašo?</string>
 </resources>

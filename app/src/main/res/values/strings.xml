@@ -39,8 +39,8 @@
     <string name="button_end_onboarding">Pabaigti</string>
     <string name="delete_pet">Pašalinti gyvūną iš sąrašo</string>
 
-    <string name="my_favorite_pets">Išrinktieji</string>
-    <string name="my_get_pet_requests">Simpatijos</string>
+    <string name="my_favorite_pets">Simpatijos</string>
+    <string name="my_get_pet_requests">Išrinktieji</string>
 
     <!--DELETE DIALOG STRINGS-->
     <string name="button_ok">Taip</string>

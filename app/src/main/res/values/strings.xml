@@ -5,9 +5,9 @@
     <string name="join_us">Prisijunk</string>
     <string name="my_story">Mano istorija</string>
     <string name="no_more_pets_to_swipe">O ne!\nSąrašas jau baigėsi.\nPatikrink pamėgtų gyvūnų sąrašą</string>
-    <string name="empty_favorites_list">Neturite pamėgtų gyvūnų,\nlaikas išsirinkti draugą!</string>
+    <string name="empty_favorites_list">Mėgstamiausių gyvūnų sąrašas tuščias,\nlaikas susirasti simpatiją!</string>
     <string name="push_and_contact">Spausk ir susisiek su prieglaudos atstovu.
-        \nPaminėk, kad kreipiesi per GetPet ir gauk mentorių!</string>
+        \nPaminėk, kad kreipiesi per GetPet ir susitark dėl pasimatymo!</string>
 
     <string name="facebook_application_id" translatable="false">1043794185794352</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1043794185794352</string>
@@ -15,13 +15,13 @@
     <string name="fui_sign_in_with_google" translation_description="Sign in button text">Prisijunk su Google</string>
     <string name="fui_sign_in_with_facebook" translation_description="Sign in button text">Prisijunk su Facebook</string>
 
-    <string name="anonymous_user_name">Anonimas</string>
+    <string name="anonymous_user_name">Svečias</string>
 
     <!--Onboarding STRINGS-->
     <string name="onboarding_1_heading">Labas!</string>
-    <string name="onboarding_1_text">Nori būti mūsų draugas?\nSusipažink su programėle!</string>
+    <string name="onboarding_1_text">Nori būti mūsų draugu?\nSusipažink su programėle!</string>
     <string name="onboarding_2_heading">Jei susižavėjai,</string>
-    <string name="onboarding_2_text">Nuslink patikusio gyvūno\nnuotrauką dešinėn - taip pridėsi\nją į mėgiamiausių sąrašą.</string>
+    <string name="onboarding_2_text">Nuslink patikusio gyvūno\nnuotrauką dešinėn - taip pridėsi\nją į mėgstamiausių sąrašą.</string>
     <string name="onboarding_3_heading">Deja, ne šį kartą?</string>
     <string name="onboarding_3_text">Jei nesusižavėjai,\nnuslink nuotrauką kairėn.</string>
     <string name="onboarding_4_heading">Susipažinkim!</string>
@@ -39,12 +39,12 @@
     <string name="button_end_onboarding">Pabaigti</string>
     <string name="delete_pet">Pašalinti gyvūną iš sąrašo</string>
 
-    <string name="my_favorite_pets">Mano pasirinkti gyvūnai</string>
-    <string name="my_get_pet_requests">Mano norai paimti gyvūnus</string>
+    <string name="my_favorite_pets">Išrinktieji</string>
+    <string name="my_get_pet_requests">Simpatijos</string>
 
     <!--DELETE DIALOG STRINGS-->
     <string name="button_ok">Taip</string>
     <string name="button_cancel">Atšaukti</string>
     <string name="dialog_delete_title">Ištrinti</string>
-    <string name="dialog_delete_message">Ar tikrai norite pašalinti gyvūną iš mėgstamų sąrašo?</string>
+    <string name="dialog_delete_message">Ar norite pašalinti gyvūną iš mėgstamiausių sąrašo?</string>
 </resources>

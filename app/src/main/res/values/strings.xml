@@ -36,8 +36,8 @@
     <string name="button_signout">Atsijungti</string>
     <string name="button_get_pet">GetPet</string>
     <string name="button_next">Kitas</string>
-    <string name="button_end_onboarding">Pabaigti</string>
-    <string name="delete_pet">Pašalinti gyvūną iš sąrašo</string>
+    <string name="button_end_onboarding">Baigti</string>
+    <string name="delete_pet">Šalinti gyvūną iš sąrašo</string>
 
     <string name="my_favorite_pets">Simpatijos</string>
     <string name="my_get_pet_requests">Išrinktieji</string>

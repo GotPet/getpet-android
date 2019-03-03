@@ -5,6 +5,7 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import lt.getpet.getpet.App
+import lt.getpet.getpet.persistence.Migrations
 import lt.getpet.getpet.persistence.PetsDatabase
 import javax.inject.Singleton
 
@@ -18,7 +19,7 @@ class DatabaseModule {
                 app.applicationContext,
                 PetsDatabase::class.java,
                 "Pets.db"
-        ).fallbackToDestructiveMigration()
+        ).addMigrations(Migrations.MIGRATION_3_4).fallbackToDestructiveMigration()
 
         if (Debug.isDebuggerConnected()) {
             builder.allowMainThreadQueries()

@@ -29,7 +29,10 @@ data class Pet(
         val description: String,
         @ColumnInfo(name = "photos")
         @Json(name = "profile_photos")
-        val photos: List<PetPhoto> = emptyList()
+        val photos: List<PetPhoto> = emptyList(),
+        @ColumnInfo(name = "is_available")
+        @Json(name = "is_available")
+        val available: Boolean = true
 ) : Parcelable {
     fun allPhotos(): List<String> {
         return listOf(photo) + photos.map { it.photo }

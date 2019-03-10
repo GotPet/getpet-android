@@ -14,5 +14,10 @@ data class User(
         val email: String,
         val photo_url: String?,
         val provider: Provider
-) : Parcelable
+) : Parcelable {
+    val largePhotoUrl: String?
+        get() {
+            return this.photo_url?.replace("/s96-c/", "/s300-c/")?.plus("?height=300")
+        }
+}
 

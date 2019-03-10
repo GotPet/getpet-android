@@ -81,8 +81,8 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         button_login.visibility = View.GONE
         button_signout.visibility = View.VISIBLE
 
-        if (user.photo_url != null) {
-            Glide.with(this).load(user.photo_url)
+        if (user.largePhotoUrl != null) {
+            Glide.with(this).load(user.largePhotoUrl)
                     .apply(RequestOptions.circleCropTransform())
                     .into(user_photo)
         }

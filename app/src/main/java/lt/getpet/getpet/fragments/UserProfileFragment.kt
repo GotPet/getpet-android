@@ -1,6 +1,7 @@
 package lt.getpet.getpet.fragments
 
-import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,10 @@ import lt.getpet.getpet.navigation.NavigationManager
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
+
+    private val PRIVACY_POLICY_URL = "https://www.getpet.lt/privatumo-politika"
 
     @Inject
     lateinit var authenticationManager: AuthenticationManager
@@ -51,6 +55,10 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
 
         button_signout.setOnClickListener {
             onUserSignedOut()
+        }
+
+        button_privacy_policy.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
         }
     }
 

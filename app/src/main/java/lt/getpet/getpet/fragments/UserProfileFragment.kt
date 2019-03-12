@@ -72,7 +72,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
         button_login.visibility = View.VISIBLE
         button_signout.visibility = View.GONE
         Glide.with(this).load(R.drawable.anonymous_avatar)
-                .apply(RequestOptions.circleCropTransform())
+                .circleCrop()
                 .into(user_photo)
     }
 
@@ -83,7 +83,7 @@ class UserProfileFragment : BaseFragment(), AuthStateChangedListener {
 
         if (user.largePhotoUrl != null) {
             Glide.with(this).load(user.largePhotoUrl)
-                    .apply(RequestOptions.circleCropTransform())
+                    .circleCrop()
                     .into(user_photo)
         }
     }

@@ -1,11 +1,11 @@
 package lt.getpet.getpet
 
 import android.os.Bundle
-import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_get_pet.*
 import lt.getpet.getpet.constants.ActivityConstants.Companion.EXTRA_PET
 import lt.getpet.getpet.data.Pet
+import lt.getpet.getpet.glide.OptimizedImageSizeUrl
 import lt.getpet.getpet.services.PetsService
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,8 +22,8 @@ class GetPetActivity : BaseActivity() {
 
         val pet = intent.getParcelableExtra<Pet>(EXTRA_PET)
 
-        Glide.with(this).load(pet.photo)
-                .apply(RequestOptions.circleCropTransform())
+        GlideApp.with(this).load(OptimizedImageSizeUrl(pet.photo))
+                .circleCrop()
                 .into(get_pet_image)
 
         get_pet_name.text = pet.name

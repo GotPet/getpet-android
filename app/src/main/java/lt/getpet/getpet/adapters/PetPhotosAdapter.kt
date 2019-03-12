@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.pet_photo.view.*
+import lt.getpet.getpet.GlideApp
 import lt.getpet.getpet.R
+import lt.getpet.getpet.glide.OptimizedImageSizeUrl
 
 
 class PetPhotosAdapter(private val context: Context, private val photos: List<String>) : PagerAdapter() {
@@ -25,8 +26,7 @@ class PetPhotosAdapter(private val context: Context, private val photos: List<St
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = inflater.inflate(R.layout.pet_photo, container, false)
-
-        Glide.with(context).load(photos[position]).into(view.pet_photo)
+        GlideApp.with(context).load(OptimizedImageSizeUrl(photos[position])).into(view.pet_photo)
 
         container.addView(view)
 

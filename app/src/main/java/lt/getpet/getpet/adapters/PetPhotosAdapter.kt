@@ -26,7 +26,14 @@ class PetPhotosAdapter(private val context: Context, private val photos: List<St
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = inflater.inflate(R.layout.pet_photo, container, false)
-        GlideApp.with(context).load(OptimizedImageSizeUrl(photos[position])).into(view.pet_photo)
+
+        // Load original image as in PetsSwipe to avoid blink due to loading new image
+        if (position != 0) {
+            GlideApp.with(context).load(OptimizedImageSizeUrl(photos[position])).into(view.pet_photo)
+        } else {
+            GlideApp.with(context).load(photos[position]).into(view.pet_photo)
+        }
+
 
         container.addView(view)
 

@@ -8,7 +8,7 @@ apply plugin: 'com.google.firebase.firebase-perf'
 
 def major = 1
 def minor = 1
-def patch = 7
+def patch = 8
 
 android {
     compileSdkVersion 28
